@@ -2,15 +2,10 @@
 import os
 import urllib
 
-from datetime import datetime
-
 from application.authorization import Authorization
-from application.model import Kommentar
-from application.model import Bidragsyter
+from application.controllers.core import CoreHandler
+from application.model import Kommentar, Bidragsyter
 from google.appengine.api import users
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
-from google.appengine.ext.webapp.util import login_required
 
 class KommentarHjelper:
 	@staticmethod
@@ -18,16 +13,11 @@ class KommentarHjelper:
 		kommentarer = Kommentar.all().filter("uri = ", uri).order('kommentartidspunkt').fetch(limit=500)
 		return { 'kommentarer':kommentarer, 'uri' : uri	 }
 		
-class VisKommentarHandler(webapp.RequestHandler):
+class VisKommentarHandler(CoreHandler):
 	def get(self, uri):
-		if uri == "":
-			self.redirect("/")
-		else:
-			template_values = KommentarHjelper.hentDataForVisning(urllib.unquote(uri))
-			path = os.path.join(os.path.dirname(__file__), '../views/kommentarer.html')
-			self.response.out.write(template.render(path, template_values))
-
-class LeggInnKommentarHandler(webapp.RequestHandler):
+		self.renderUsingTemplate('../../views/kommentarer.html', KommentarHjelper.hentDataForVisning(urllib.unquote(uri)))
+			
+class LeggInnKommentarHandler(CoreHandler):
 	
 	def post(self):
 		if Authorization.authorize(self):
@@ -35,7 +25,4 @@ class LeggInnKommentarHandler(webapp.RequestHandler):
 			kommentar_innhold = cgi.escape(self.request.get('kommentar'))
 			bidrager = Bidragsyter.hent(users.get_current_user())
 			Kommentar(innhold=kommentar_innhold, bidragsyter=bidrager, uri=kommentar_uri).put()
-				
-			template_values = KommentarHjelper.hentDataForVisning(kommentar_uri)
-			path = os.path.join(os.path.dirname(__file__), '../views/kommentarer.html')
-			self.response.out.write(template.render(path, template_values))
+			self.renderUsingTemplate('../../views/kommentarer.html', KommentarHjelper.hentDataForVisning(kommentar_uri))

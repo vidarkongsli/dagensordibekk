@@ -1,21 +1,21 @@
 import os
 import cgi
+import urllib
+import logging
 from application.authorization import Authorization
 from google.appengine.api import users
 from google.appengine.ext import webapp, db
-from google.appengine.ext.webapp import template
-from google.appengine.ext.webapp.util import run_wsgi_app, login_required
+from google.appengine.ext.webapp.util import login_required
+from application.controllers.core import CoreHandler
 from application.model import Ord, Bidragsyter
-from django.utils import simplejson
 
-class NyttOrdHandler(webapp.RequestHandler):
+class NyttOrdHandler(CoreHandler):
 	@login_required
 	def get(self):
 		Authorization.authorize(self)
-		path = os.path.join(os.path.dirname(__file__), '../../views/forslagsskjema.html')
-		self.response.out.write(template.render(path, {}))
+		self.renderUsingTemplate('../../views/forslagsskjema.html', {})
 
-class ForslagHandler(webapp.RequestHandler):
+class ForslagHandler(CoreHandler):
 	def post(self):
 		Authorization.authorize(self)
 		ord = cgi.escape(self.request.get('ord'))
@@ -29,17 +29,15 @@ class ForslagHandler(webapp.RequestHandler):
 			bidrager = Bidragsyter.hent(users.get_current_user())
 			Ord(navn=ord, beskrivelse=besk, bidragsyter=bidrager.key()).put()
 		
-		self.response.out.write(simplejson.dumps({ 'errorCode':errorCode }))
+		self.renderAsJson({ 'errorCode':errorCode })
 	
-class TilGodkjenningHandler(webapp.RequestHandler):
+class TilGodkjenningHandler(CoreHandler):
 	@login_required
 	def get(self):
 		alle_ord = Ord.all().filter("arbeidsflytstilstand =", 0).order('navn')
-		template_values = { 'ord':alle_ord }
-		path = os.path.join(os.path.dirname(__file__), '../../views/liste.html')
-		self.response.out.write(template.render(path, template_values))
+		self.renderUsingTemplate('../../views/liste.html', { 'ord':alle_ord })
 
-class NesteDagensOrdHandler(webapp.RequestHandler):
+class NesteDagensOrdHandler(CoreHandler):
 	@login_required
 	def get(self):
 		alle_ord = []
@@ -49,11 +47,9 @@ class NesteDagensOrdHandler(webapp.RequestHandler):
 		alle_gamle_godkjente_ord = Ord.all().filter("arbeidsflytstilstand =", 1).filter("harVaertDagensOrd =", True).filter("erDagensOrd =", False).order('sisteDagensOrdDato')
 		if not alle_gamle_godkjente_ord == None:
 			alle_ord.extend(alle_gamle_godkjente_ord)
-		template_values = { 'ord':alle_ord }
-		path = os.path.join(os.path.dirname(__file__), '../../views/liste_neste.html')
-		self.response.out.write(template.render(path, template_values))
+		self.renderUsingTemplate('../../views/liste_neste.html', { 'ord':alle_ord })
 		
-class StemmeHandler(webapp.RequestHandler):
+class StemmeHandler(CoreHandler):
 	def post(self):
 		errorCode = 0
 		antallStemmer = 0
@@ -76,17 +72,15 @@ class StemmeHandler(webapp.RequestHandler):
 				antallStemmer = len(ord.stemmerMot)
 			ord.put()
 		
-		self.response.out.write(simplejson.dumps({ 'errorCode':errorCode, 'antallStemmer':antallStemmer})) 
+		self.renderAsJson({ 'errorCode':errorCode, 'antallStemmer':antallStemmer})
 
-class VisDagensOrdHandler(webapp.RequestHandler):
+class VisDagensOrdHandler(CoreHandler):
 	@login_required
 	def get(self):
 		dagensOrd = Ord.all().filter("erDagensOrd =", True).get()
-		template_values = { 'ord':dagensOrd }
-		path = os.path.join(os.path.dirname(__file__), '../../views/dagens_ord.html')
-		self.response.out.write(template.render(path, template_values))
-
-class OrdHandler(webapp.RequestHandler):
+		self.renderUsingTemplate('../../views/dagens_ord.html', { 'ord':dagensOrd })
+		
+class OrdHandler(CoreHandler):
 	def get(self, ordForesporsel):
 		if ordForesporsel == "":
 			self.redirect("/")
@@ -97,7 +91,4 @@ class OrdHandler(webapp.RequestHandler):
 			if ord == None:
 				self.error(404)
 			else:
-				logging.info("The type of beskrivelse is " + str(type(ord.beskrivelse)))
-				template_values = { 'ord':ord }
-				path = os.path.join(os.path.dirname(__file__), '../../views/dagens_ord.html')
-				self.response.out.write(template.render(path, template_values))
+				self.renderUsingTemplate('../../views/dagens_ord.html', { 'ord':ord })

@@ -23,7 +23,7 @@ application = webapp.WSGIApplication(
 									  ('/ord/neste', NesteDagensOrdHandler),
 									  ('/ord/(.*)', OrdHandler),
 									  ('/kommentar/ny', LeggInnKommentarHandler),
-									  ('/kommentar/(.*)', VisKommentarHandler),
+									  ('/kommentar/(.+)', VisKommentarHandler),
 									  ('/admin/bidragsyter', BidragsyterVisningsHandler),
 									  ('/admin/bidragsyter/svartelist', BidragsyterSvartelisteHandler)],
                                      debug=True)
