@@ -1,9 +1,12 @@
 import os
+import cgi
 from application.authorization import Authorization
-from google.appengine.ext import webapp
+from google.appengine.api import users
+from google.appengine.ext import webapp, db
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app, login_required
-from application.model import Ord
+from application.model import Ord, Bidragsyter
+from django.utils import simplejson
 
 class NyttOrdHandler(webapp.RequestHandler):
 	@login_required
@@ -25,8 +28,8 @@ class ForslagHandler(webapp.RequestHandler):
 		else:
 			bidrager = Bidragsyter.hent(users.get_current_user())
 			Ord(navn=ord, beskrivelse=besk, bidragsyter=bidrager.key()).put()
-			
-		self.response.out.write("{'errorCode':" + `errorCode` + "}")
+		
+		self.response.out.write(simplejson.dumps({ 'errorCode':errorCode }))
 	
 class TilGodkjenningHandler(webapp.RequestHandler):
 	@login_required
@@ -72,8 +75,8 @@ class StemmeHandler(webapp.RequestHandler):
 				ord.stemmerMot.append(bidragsyterId)
 				antallStemmer = len(ord.stemmerMot)
 			ord.put()
-			
-		self.response.out.write("{'errorCode':" + str(errorCode) + ",'antallStemmer':"+str(antallStemmer)+"}") 
+		
+		self.response.out.write(simplejson.dumps({ 'errorCode':errorCode, 'antallStemmer':antallStemmer})) 
 
 class VisDagensOrdHandler(webapp.RequestHandler):
 	@login_required
