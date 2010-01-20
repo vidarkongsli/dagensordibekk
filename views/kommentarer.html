@@ -1,0 +1,12 @@
+﻿{% for kommentar in kommentarer %}
+	<li class='{% cycle alt,silly %}'>
+		<div class="comment-metadata" style="background-image: url({{ kommentar.gravatarUrl }})">
+			<cite>{{ kommentar.bidragsyter.navn|default:"&lt;ukjent&gt;" }} says:</cite>
+			<p>{{ kommentar.kommentartidspunkt|date }}</p>
+		</div>
+		<p class="comment-data">
+			{{ kommentar.innhold }}
+		</p>
+	</li>
+{% endfor %}
+		

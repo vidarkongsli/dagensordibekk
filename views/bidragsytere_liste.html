@@ -1,0 +1,54 @@
+﻿{% extends "_master.html" %}
+
+{% block overskrift %}Bidragsytere{% endblock %}
+
+{% block innhold %}
+	<script type="text/javascript">
+		function svartelist(bidragsyterId, skalSvartelistes) {
+			$.post('{% url BidragsyterSvartelisteHandler %}', { 'bidragsyterId' : bidragsyterId, 'skalSvartelistes': skalSvartelistes }, function (data) {
+				if (data.errorCode == 0) {
+					$("#svartelistet-" + bidragsyterId).text(skalSvartelistes? "Ja":"Nei");
+				} else {
+					alert('Dette er flaut. Det ser ut som noe gikk galt...');
+				}
+			}, 'json');
+		}
+			
+		$(function() {
+			$("#bidragsytere").accordion({ active: false, collabsible : true });
+		});
+	</script>
+	
+	<div id="bidragsytere">
+    {% for bidragsyter in bidragsytere %}
+		<h3><a href="#">{{ bidragsyter.navn }}</a></h3>
+		<div>
+			<p>
+				Email: {{ bidragsyter.googleKonto.email }}
+			</p>
+			<p>
+				På svarteliste: <span id="svartelistet-{{ bidragsyter.key.id }}">
+				{% if bidragsyter.svartelistet %}Ja{% else %}Nei{% endif %}
+			</p>
+			<button id="svartelist-{{ bidragsyter.key.id }}">Svartelist!</button>
+			<div id="svartelist-dialog-{{ bidragsyter.key.id }}" style="display:none">Er du sikker på at du endre svartelistingen {{ bidragsyter.navn }}</div>
+			
+			<script type="text/javascript">
+				$("#svartelist-dialog-{{ bidragsyter.key.id }}").dialog({
+					bgiframe: true,
+					modal: true,
+					autoOpen: false,
+					buttons: {
+						Nay: function() { $(this).dialog('close'); },
+						Yea: function() { svartelist({{ bidragsyter.key.id }}, {% if bidragsyter.svartelistet %}false{% else %}true{% endif %}); $(this).dialog('close'); }
+					}
+				});
+				$('#svartelist-{{ bidragsyter.key.id }}').click(function() {
+					$("#svartelist-dialog-{{ bidragsyter.key.id }}").dialog('open');
+				});
+			</script>
+		</div>
+	{% endfor %}
+	</div>
+	<div id="svartelist-dialog" style="display:none">Du har allerede stemt på dette ordet, din luring!</div>
+{% endblock %}

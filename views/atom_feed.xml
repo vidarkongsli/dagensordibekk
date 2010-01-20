@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"> 
+	<title>Dagens Ord @ BEKK</title>
+	<subtitle>Bringer daglige språklige gullkorn til konsulentene.</subtitle>
+	<link href="{% url FeedHandler %}" rel="self" />
+	<id>urn:uuid:571852b0-f9cc-11de-8a39-0800200c9a66</id>
+	<updated>{{ ord.sisteDagensOrdDato|date:"Y-m-d\TH:i:s" }}Z</updated>
+	<author>
+		<name>Vidar Kongsli</name>
+		<email>vidar.kongsli@bekk.no</email>
+	</author>
+	<entry>
+		<title>{{ ord.navn }}</title>
+		<link href="/ord/{{ ord.navn }}" />
+		<id>urn:dagensordibekk:{{ ord.key }}</id>
+		<updated>{{ ord.sisteDagensOrdDato|date:"Y-m-d\TH:i:s" }}Z</updated>
+		<summary>{{ ord.beskrivelse }}</summary>
+	</entry>
+</feed>

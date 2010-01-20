@@ -1,0 +1,82 @@
+﻿{% load i18n %}
+{% extends "_master.html" %}
+{% block hode %}
+<link rel="alternate" type="application/atom+xml" title="Dagens Ord Atom Syndication" href="{% url FeedHandler %}" />
+{% endblock %}
+{% block overskrift %}{% endblock %}
+{% block innhold %}
+<div class="ui-widget ui-widget-content ui-corner-all dagens-ord">
+	<h2>{{ ord.navn }}</h2>
+	<blockquote>{{ ord.beskrivelse }}</blockquote>
+</div>
+
+<div id="metadata" class="metadata">
+	<h3><a href="#">Mer informasjon</a></h3>
+	<div>
+		<ul>
+			<li>Foreslått av {{ ord.bnavn }}</li>
+			<li>Stemmer (for/mot): {{ ord.stemmerFor|length }}/{{ ord.stemmerMot|length }}
+		</ul>
+	</div>
+	<h3 id="comments"><a href="#">Ingen kommentarer</a></h3>
+	<div>
+		<ul></ul>
+		<button id="comment-new">Kommentér</button>
+	</div>
+</div>
+
+<div id="comment-dialog">
+	<form>
+		<label for="kommentar">Kommentar:</label><br />
+		<textarea cols="40" rows="5" id="kommentar" name="kommenar"></textarea>
+		<input type="hidden" id="kommentar-uri" name="uri" value="urn:dagensordibekk:{{ ord.key }}" />
+	</form>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	var commentSection = $('#comments');
+
+	function insertDataAndUpdateCommentsHeader(data) {
+		$('#comments + div ul').empty().append(data);	
+		var numberOfComments = $('#comments + div li').size();
+		var newText;
+		if (numberOfComments == 0) {
+			newText = "Ingen kommentarer";
+		} else if (numberOfComments == 1) {
+			newText = "Én kommentar";
+		} else {
+			newText = "" + numberOfComments + " kommentarer";
+		}
+		$('#comments a').text(newText);
+	}
+	
+	$('#metadata')
+		.accordion({'collapsible':true, 'active':false, 'autoHeight':false});
+	
+	$("#comment-new").click(function() { $("#comment-dialog").dialog('open'); });
+	$("#comment-dialog").dialog({
+		bgiframe: true,
+		modal: true,
+		autoOpen: false,
+		buttons: {
+			Kanseller: function() {	$(this).dialog('close'); },
+			Send: function() {
+				var kommentarFelt = $('#kommentar');
+				$.post('{% url LeggInnKommentarHandler %}', { 'kommentar':kommentarFelt.val(), 'uri':$('#kommentar-uri').val() }, function(data) {
+					insertDataAndUpdateCommentsHeader(data);
+					kommentarFelt.val("");
+				},'html');
+				$(this).dialog('close');
+			}
+		}
+	});	
+		
+	$.get('/kommentar/urn:dagensordibekk:{{ ord.key }}', function (data) {
+		insertDataAndUpdateCommentsHeader(data);
+		commentSection.show('drop');
+	}, 'html');
+});
+</script>
+{% endblock %}

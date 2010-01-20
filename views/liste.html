@@ -1,0 +1,73 @@
+﻿{% extends "_master.html" %}
+
+{% block overskrift %}Ord til vurdering{% endblock %}
+
+{% block innhold %}
+	<script type="text/javascript">
+		function avgiStemme(ordId, stemmeFor ) {
+				$.post('/ord/stem', { 'ord-nokkel' : ordId, 'erStemmeFor' : stemmeFor }, function(data) {
+					var melding = $('#stemme-registrert-melding-' + ordId);
+					if (data.errorCode == 0) {
+						$('#stemmer-' + (stemmeFor?'paa':'mot') + '-' + ordId).text(data.antallStemmer);
+						melding.show();
+								
+					} else if (data.errorCode == 1) {
+						alert('Dette er flaut. Det ser ut som at ordet ikke fins i databasen. Noe må ha gått galt...');
+					} else {
+						melding.hide();
+						$("#ordet-finnes-allerede-dialog").dialog('open');
+					}
+				}, 'json');		
+			}
+			
+		$(function() {
+			$("#ordliste").accordion({ active: false, collabsible : true });
+			$("#ordet-finnes-allerede-dialog").dialog({
+				bgiframe: true,
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					Ok: function() { $(this).dialog('close'); }
+				}
+			});
+		});
+	</script>
+	
+	<div id="ordliste">
+    {% for o in ord %}
+		<h3><a href="#">{{ o.navn }}</a></h3>
+		<div>
+			<p>
+				Foreslått av {{ o.bnavn }}
+			</p>
+			<p>
+				Stemmer for: <span id="stemmer-paa-{{ o.key.id }}">{{ o.stemmerFor|length }}</span>
+				Stemmer mot: <span id="stemmer-mot-{{ o.key.id }}">{{ o.stemmerMot|length }}</span>
+			</p>
+			<p id="stemmepanel">
+				<span>Her stemmes:</span>
+				<a id="stem-paa-{{ o.key.id }}" href="#" title="Stem for!" class="ui-icon ui-icon-circle-plus"></a>
+				<a id="stem-mot-{{ o.key.id }}" href="#" title="Stem mot!" class="ui-icon ui-icon-circle-minus"></a>
+				<p style="clear:both" />
+			</p>
+			<div id="stemme-registrert-melding-{{ o.key.id }}" class="ui-widget">
+				<div class="ui-state-highlight ui-corner-all">
+					<p>
+						<span class="ui-icon ui-icon-info" style="float: left; margin-right: 0.3em;"></span>
+						Din stemme er registrert
+					</p>
+				</div>
+			</div>
+			<label for="beskrivelse">Beskrivelse:</label><br />
+			<textarea cols="60" rows="5" disabled="true" name="beskrivelse">{{o.beskrivelse }}</textarea>
+			<script type="text/javascript">
+				$(function() {
+					$('#stem-paa-{{ o.key.id }}').click(function() { avgiStemme({{ o.key.id }}, true) });
+					$('#stem-mot-{{ o.key.id }}').click(function() { avgiStemme({{ o.key.id }}, false) });
+				});
+			</script>
+		</div>
+	{% endfor %}
+	</div>
+	<div id="ordet-finnes-allerede-dialog" style="display:none">Du har allerede stemt på dette ordet, din luring!</div>
+{% endblock %}

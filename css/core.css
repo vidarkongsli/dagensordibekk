@@ -1,0 +1,35 @@
+body{ font: 62.5% "Trebuchet MS", sans-serif; margin: 50px;}
+.demoHeaders { margin-top: 2em; }
+#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+ul#icons {margin: 0; padding: 0;}
+ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 4px;}
+button {
+	margin: .5em 0 .5em 8px;
+	color: #555555;
+	background: #e6e6e6 url(css/smoothness/images/ui-bg_glass_75_dadada_1x400.png) 0 50% repeat-x;
+	font-size: 1em;
+	border: 1px solid #d3d3d3;
+	cursor: pointer;
+	padding: .2em .6em .3em .6em;
+	line-height: 1.4em;
+}
+form .ui-state-highlight { padding: 0pt 0.7em; }
+#message { display:none }
+#ordliste #stemmepanel * { float: left; }
+#ordliste label { clear: both; }
+#ordliste .ui-widget { display:none; }
+#main { margin: 20px auto; width: 600px }
+body { width:100% }
+.toppmeny li { display:inline; }
+.dagens-ord { padding: 0.5em 1em}
+			
+
+.metadata .alt { background-color: #FAFAFA; border-top: 1px solid #EEEEEE; border-bottom: 1px solid #EEEEEE }
+.comment-metadata p { margin:0 }
+.metadata ul { padding-left: 10px }
+.metadata li { list-style-type: none; margin: 10px 0; padding: 10px }
+.comment-metadata { background: transparent no-repeat scroll left top; padding-left: 30pt; min-height: 36px }
+.comment-data { margin: 10px 5px 10px 0; }
+#comment-dialog { display:none }
