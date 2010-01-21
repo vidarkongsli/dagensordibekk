@@ -8,6 +8,13 @@ class Bidragsyter(db.Model):
 	navn = db.StringProperty()
 	svartelistet = db.BooleanProperty(default=False)
 	
+	def visningsnavn(self):
+		if self.navn == None or self.navn == "":
+			if self.googleKonto != None:
+				return self.googleKonto.nickname()
+			return "ukjent"
+		return self.navn
+	
 	@staticmethod
 	def hent(user):
 		bidragsyter = Bidragsyter.gql("WHERE googleKonto = :1", user).get()
@@ -33,7 +40,7 @@ class Ord(db.Model):
 	def bnavn(self):
 		if self.bidragsyter == None:
 			return self.bidragsyter_navn
-		return self.bidragsyter.navn
+		return self.bidragsyter.visningsnavn()
 
 class Kommentar(db.Model):
 	innhold = db.StringProperty(multiline=True)
