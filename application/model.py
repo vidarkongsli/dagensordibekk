@@ -43,5 +43,5 @@ class Kommentar(db.Model):
 	
 	def gravatarUrl(self):
 		gravatar_url = "http://www.gravatar.com/avatar.php?"
-		gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(self.bidragsyter.googleKonto.email().lower()).hexdigest(), 'default':'http://www.some.where.info', 'size':'40'})
+		gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(self.bidragsyter.googleKonto.email().lower()).hexdigest(), 'size':'40'})
 		return gravatar_url
