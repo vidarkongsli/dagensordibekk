@@ -6,7 +6,7 @@ from google.appengine.ext.webapp import template
 from application.model import Bidragsyter
 from datetime import datetime
 
-class BidragsyterVisningsHandler(webapp.RequestHandler):
+class BidragsytereVisningsHandler(webapp.RequestHandler):
 	def get(self):
 		bidragsytere = Bidragsyter.all().order('navn')
 		template_map = { 'bidragsytere': bidragsytere}

@@ -6,6 +6,7 @@ import urllib, hashlib
 class Bidragsyter(db.Model):
 	googleKonto = db.UserProperty()
 	navn = db.StringProperty()
+	twitter = db.StringProperty(default="")
 	svartelistet = db.BooleanProperty(default=False)
 	
 	def visningsnavn(self):

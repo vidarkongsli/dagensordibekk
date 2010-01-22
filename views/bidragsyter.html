@@ -1,0 +1,54 @@
+﻿{% load i18n %}
+{% extends "_master.html" %}
+{% block overskrift %}{% endblock %}
+{% block hode %}
+<script src="/js/jquery.inline-edit.min.js"></script>
+<style>
+.inline-edit .form { display : none }
+.inline-edit { display: inline }
+</style>
+{% endblock %}
+{% block innhold %}
+<div class="ui-widget ui-widget-content ui-corner-all bidragsyter">
+	<div class="inline-edit" id="nickname">
+		<h2 class="display">{{ bidragsyter.visningsnavn }}</h2>
+		<span class='form'>
+			<input type='text' class='text' />
+			<input type='submit' class='save' value=' Lagre ' />
+			<input type='submit' class='cancel' value=' Avbryt ' />
+		</span>
+	</div>
+	<ul>
+		<li>Google-konto: <span>{{ bidragsyter.googleKonto }}</span></li>
+		<li>Twitter-brukernavn:
+			<div id='twitter' class="inline-edit">
+				<span class="display">{{ bidragsyter.twitter|default:"[legg inn]" }}</span>
+				<span class='form'>
+					<input type='text' class='text' />
+					<input type='submit' class='save' value=' Lagre ' />
+					<input type='submit' class='cancel' value=' Avbryt ' />
+				</span>
+			</div>
+		</li>
+	</ul>
+	{% if edit %}
+	<p>(Klikk på teksten for å redigere.)</p>
+	{% endif %}
+</div>
+
+<div id="comment-dialog">
+	<form>
+		<label for="kommentar">Kommentar:</label><br />
+		<textarea cols="40" rows="5" id="kommentar" name="kommenar"></textarea>
+		<input type="hidden" id="kommentar-uri" name="uri" value="urn:dagensordibekk:{{ ord.key }}" />
+	</form>
+</div>
+{% if edit %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#twitter').inlineEdit({href: '{% url BidragsyterHandler %}', hover: 'inline-hover', postData : { 'field' : 'twitter' }, 'loadtxt' : 'Lagrer...'}); 
+	$('#nickname').inlineEdit({href: '{% url BidragsyterHandler %}', hover: 'inline-hover', postData : { 'field' : 'nickname' }, 'loadtxt' : 'Lagrer...'}); 
+});
+</script>
+{% endif %}
+{% endblock %}
