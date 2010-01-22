@@ -2,6 +2,7 @@ from datetime import date
 from datetime import datetime
 from google.appengine.ext import db
 import urllib, hashlib
+import base64
 
 class Bidragsyter(db.Model):
 	googleKonto = db.UserProperty()
@@ -53,3 +54,19 @@ class Kommentar(db.Model):
 		gravatar_url = "http://www.gravatar.com/avatar.php?"
 		gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(self.bidragsyter.googleKonto.email().lower()).hexdigest(), 'size':'40'})
 		return gravatar_url
+
+class Konto(db.Model):
+	navn = db.StringProperty()
+	brukernavn = db.StringProperty()
+	passord = db.StringProperty()
+	
+	@staticmethod
+	def get(navn):
+		if Konto.all().get() == None:
+			Konto(navn='dummy', brukernavn='dummy', passord = 'dummy').put()
+		return Konto.all().filter('navn = ', navn).get()
+		
+	def as_basic_auth_header(self):
+		base64string = base64.encodestring('%s:%s' % (self.brukernavn, self.passord))[:-1]
+		return "Basic %s" % base64string
+

@@ -1,8 +1,14 @@
 ﻿from google.appengine.ext import webapp
-from application.model import Ord
-from application.model import Bidragsyter
+from application.controllers.core import CoreHandler
+from application.model import Ord,Bidragsyter,Konto
 from datetime import datetime
 import logging
+from google.appengine.api import urlfetch
+from django.utils import simplejson
+import base64
+import urllib
+
+
 
 class ValgHandler(webapp.RequestHandler):
 	def get(self):
@@ -52,3 +58,32 @@ class SettDagensOrdHandler(webapp.RequestHandler):
 		else: 
 			output = "Forste dagens ord: " + nesteDagensOrd.navn
 		self.response.out.write(output)
+
+class TwitterHandler(CoreHandler):
+	def get(self):
+		dagensOrd = Ord.all().filter("erDagensOrd =", True).get()
+		if dagensOrd != None:
+			status = (u"%s (%s): %s" % ( dagensOrd.navn, self.shortenUrl(u'http://dagensordibekk.appspot.com/ord/' + dagensOrd.navn), dagensOrd.beskrivelse)).encode('utf-8')
+#			status = u"%s (%s): %s" % ( dagensOrd.navn, self.shortenUrl('/ord/' + dagensOrd.navn), dagensOrd.beskrivelse)
+			api_url = "http://twitter.com/statuses/update.json?status=%s" % urllib.quote(status)
+			result = urlfetch.fetch(url=api_url, payload={}, method=urlfetch.POST, headers = { 'Authorization' : Konto.get('twitter').as_basic_auth_header() })
+			if result.status_code == 200:
+				logging.info("Successfully updated twitter status")
+			else:
+				logging.error("Twitter returned status code %i" % result.status_code)
+				logging.error(result.content)
+			self.response.out.write(str(result.status_code) + "|" + result.content)
+		else:
+			logging.error("Fant ikke dagens ord")
+			self.response.out.write("Fant ikke dagens ord")
+			
+	#Shortens a URL using is.gd - if any errors occur it will return the original url.
+	def shortenUrl(self, url):	
+		try:
+			result = urlfetch.fetch("http://is.gd/api.php?longurl=" + urllib.quote(url.encode('utf-8')))
+			if result.status_code == 200:
+				return result.content
+			else:
+				return url
+		except:
+			return url
