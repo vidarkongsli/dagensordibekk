@@ -8,3 +8,8 @@ cron:
   url: /ord/cron/settdagensord
   schedule: every mon,tue,wed,thu,fri 01:30
   timezone: Europe/Oslo
+
+- description: Sende statusoppdatering til Twitter
+  url: /ord/cron/twitter
+  schedule: every mon,tue,wed,thu,fri 09:30
+  timezone: Europe/Oslo
