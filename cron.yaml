@@ -1,0 +1,10 @@
+cron:
+- description: Foreta valg av nye ord
+  url: /ord/cron/valg
+  schedule: every mon,tue,wed,thu,fri 00:30 
+  timezone: Europe/Oslo
+ 
+- description: Sette dagens ord
+  url: /ord/cron/settdagensord
+  schedule: every mon,tue,wed,thu,fri 01:30
+  timezone: Europe/Oslo
