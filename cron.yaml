@@ -13,3 +13,8 @@ cron:
   url: /ord/cron/twitter
   schedule: every mon,tue,wed,thu,fri 09:30
   timezone: Europe/Oslo
+
+- description: Sende epost med dagens ord
+  url: /ord/cron/mail
+  schedule: every mon,tue,wed,thu,fri 08:00
+  timezone: Europe/Oslo

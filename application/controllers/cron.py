@@ -108,6 +108,6 @@ class MailHandler(CoreHandler):
 Ordet er fremmet av: %s
 Nye ord fremmes her: %s
 Denne tjenesten leveres av Dagens Ord-Komiteen. (c) 2003-2010
-""" % (dagensOrd.navn, dagensOrd.beskrivelse, dagensOrd.bnavn, "http://")
-			
+""" % (dagensOrd.navn, dagensOrd.beskrivelse, dagensOrd.bnavn, "http://dagensordibekk.appspot.com/ord/nytt")
+			mail.send_mail("Dagens Ord <vidar.kongsli@gmail.com>", to, subject, body)
 			self.response.out.write('Mail sendt')
