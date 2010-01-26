@@ -9,6 +9,9 @@ class Bidragsyter(db.Model):
 	navn = db.StringProperty()
 	twitter = db.StringProperty(default="")
 	svartelistet = db.BooleanProperty(default=False)
+	bekkAdresse = db.EmailProperty()
+	paaBekkMailliste = db.BooleanProperty(default=False)
+	paaGoogleMailliste = db.BooleanProperty(default=False)
 	
 	def visningsnavn(self):
 		if self.navn == None or self.navn == "":

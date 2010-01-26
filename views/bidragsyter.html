@@ -2,7 +2,7 @@
 {% extends "_master.html" %}
 {% block overskrift %}{% endblock %}
 {% block hode %}
-<script src="/js/jquery.inline-edit.min.js"></script>
+<script src="/js/jquery.jeditable.mini.js"></script>
 <style>
 .inline-edit .form { display : none }
 .inline-edit { display: inline }
@@ -10,26 +10,13 @@
 {% endblock %}
 {% block innhold %}
 <div class="ui-widget ui-widget-content ui-corner-all bidragsyter">
-	<div class="inline-edit" id="nickname">
-		<h2 class="display">{{ bidragsyter.visningsnavn }}</h2>
-		<span class='form'>
-			<input type='text' class='text' />
-			<input type='submit' class='save' value=' Lagre ' />
-			<input type='submit' class='cancel' value=' Avbryt ' />
-		</span>
-	</div>
+	<h2 class="editable" id="nickname">{{ bidragsyter.visningsnavn }}</h2>
 	<ul>
-		<li>Google-konto: <span>{{ bidragsyter.googleKonto }}</span></li>
-		<li>Twitter-brukernavn:
-			<div id='twitter' class="inline-edit">
-				<span class="display">{{ bidragsyter.twitter|default:"[legg inn]" }}</span>
-				<span class='form'>
-					<input type='text' class='text' />
-					<input type='submit' class='save' value=' Lagre ' />
-					<input type='submit' class='cancel' value=' Avbryt ' />
-				</span>
-			</div>
-		</li>
+		<li>Google-konto: <span id="google">{{ bidragsyter.googleKonto }}</span></li>
+		<li>Twitter-brukernavn: <span id='twitter' class="editable">{{ bidragsyter.twitter|default:"[legg inn]" }}</span></li>
+		<li>Bekk-epost: <span id='bekk' class="editable">{{ bidragsyter.bekkAdresse|default:"[legg inn]" }}</span></li>
+		<li>Motta Dagens Ord på Bekk-epost: <span id='bekk-mailliste' class="editable-select">{{ bidragsyter.paaBekkMailliste|yesno:"Ja,Nei" }}</span></li>
+		<li>Motta Dagens Ord på Gmail-adresse: <span id='google-mailliste' class="editable-select">{{ bidragsyter.paaGoogleMailliste|yesno:"Ja,Nei" }}</span></li>
 	</ul>
 	{% if edit %}
 	<p>(Klikk på teksten for å redigere.)</p>
@@ -46,8 +33,25 @@
 {% if edit %}
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#twitter').inlineEdit({href: '{% url BidragsyterHandler %}', hover: 'inline-hover', postData : { 'field' : 'twitter' }, 'loadtxt' : 'Lagrer...'}); 
-	$('#nickname').inlineEdit({href: '{% url BidragsyterHandler %}', hover: 'inline-hover', postData : { 'field' : 'nickname' }, 'loadtxt' : 'Lagrer...'}); 
+	$('.editable').editable('{% url BidragsyterHandler %}', { 
+         cancel    : 'Avbryt',
+         submit    : 'Lagre',
+         indicator : 'Lagrer...',
+         tooltip   : 'Klikk for å endre...',
+		 style     : 'display : inline'
+     });
+	$('.editable-select').editable('{% url BidragsyterHandler %}', { 
+         cancel    : 'Avbryt',
+         submit    : 'Lagre',
+         indicator : 'Lagrer...',
+         tooltip   : 'Klikk for å endre...',
+		 style     : 'display : inline',
+		 data      : { '1' : 'Ja', '0' : 'Nei', 'selected' : '0' },
+		 type      : 'select'
+     });
+	 
+	  
+	 
 });
 </script>
 {% endif %}
