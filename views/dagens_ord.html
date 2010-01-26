@@ -14,7 +14,14 @@
 	<h3><a href="#">Mer informasjon</a></h3>
 	<div>
 		<ul>
-			<li>Foreslått av {{ ord.bnavn }}</li>
+			<li>
+				Foreslått av 
+				{% if ord.bidragsyter %}
+					<a href="/person/{{ ord.bidragsyter.key }}">{{ ord.bidragsyter.visningsnavn }}</a>
+				{% else %}
+					{{ ord.bnavn }}
+				{% endif %}
+			</li>
 			<li>Stemmer (for/mot): {{ ord.stemmerFor|length }}/{{ ord.stemmerMot|length }}
 		</ul>
 	</div>

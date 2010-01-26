@@ -38,7 +38,12 @@
 		<h3><a href="#">{{ o.navn }}</a></h3>
 		<div>
 			<p>
-				Foreslått av {{ o.bnavn }}
+				Foreslått av 
+				{% if o.bidragsyter %}
+					<a href="/person/{{ o.bidragsyter.key }}">{{ o.bidragsyter.visningsnavn }}</a>
+				{% else %}
+					{{ o.bnavn }}
+				{% endif %}
 			</p>
 			<p>
 				Stemmer for: <span id="stemmer-paa-{{ o.key.id }}">{{ o.stemmerFor|length }}</span>
