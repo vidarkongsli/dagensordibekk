@@ -1,4 +1,5 @@
-﻿from google.appengine.ext import webapp
+﻿from google.appengine.api import mail
+from google.appengine.ext import webapp
 from application.controllers.core import CoreHandler
 from application.model import Ord,Bidragsyter,Konto
 from datetime import datetime
@@ -7,8 +8,6 @@ from google.appengine.api import urlfetch
 from django.utils import simplejson
 import base64
 import urllib
-
-
 
 class ValgHandler(webapp.RequestHandler):
 	def get(self):
@@ -64,7 +63,6 @@ class TwitterHandler(CoreHandler):
 		dagensOrd = Ord.all().filter("erDagensOrd =", True).get()
 		if dagensOrd != None:
 			status = (u"%s (%s): %s" % ( dagensOrd.navn, self.shortenUrl(u'http://dagensordibekk.appspot.com/ord/' + dagensOrd.navn), dagensOrd.beskrivelse)).encode('utf-8')
-#			status = u"%s (%s): %s" % ( dagensOrd.navn, self.shortenUrl('/ord/' + dagensOrd.navn), dagensOrd.beskrivelse)
 			api_url = "http://twitter.com/statuses/update.json?status=%s" % urllib.quote(status)
 			result = urlfetch.fetch(url=api_url, payload={}, method=urlfetch.POST, headers = { 'Authorization' : Konto.get('twitter').as_basic_auth_header() })
 			if result.status_code == 200:
@@ -72,9 +70,11 @@ class TwitterHandler(CoreHandler):
 			else:
 				logging.error("Twitter returned status code %i" % result.status_code)
 				logging.error(result.content)
+				self.error(500)
 			self.response.out.write(str(result.status_code) + "|" + result.content)
 		else:
 			logging.error("Fant ikke dagens ord")
+			self.error(500)
 			self.response.out.write("Fant ikke dagens ord")
 			
 	#Shortens a URL using is.gd - if any errors occur it will return the original url.
@@ -87,3 +87,27 @@ class TwitterHandler(CoreHandler):
 				return url
 		except:
 			return url
+			
+class MailHandler(CoreHandler):
+	def get(self):
+		dagensOrd = Ord.all().filter("erDagensOrd =", True).get()
+		if dagensOrd != None:
+			googleAddresses = map(lambda x: x.googleKonto.email(), Bidragsyter.all().filter('paaGoogleMailliste =', True).fetch(100))
+			bekkAddresses = map(lambda x: x.bekkAdresse, Bidragsyter.all().filter('paaBekkMailliste', True).fetch(100))
+			logging.info('Sending mail to %s' % ','.join(googleAddresses + bekkAddresses))
+			to = googleAddresses + bekkAddresses
+			subject = dagensOrd.navn
+			body = """
+			
+%s
+
+%s
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Ordet er fremmet av: %s
+Nye ord fremmes her: %s
+Denne tjenesten leveres av Dagens Ord-Komiteen. (c) 2003-2010
+""" % (dagensOrd.navn, dagensOrd.beskrivelse, dagensOrd.bnavn, "http://")
+			
+			self.response.out.write('Mail sendt')
