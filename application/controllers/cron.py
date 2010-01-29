@@ -67,6 +67,7 @@ class TwitterHandler(CoreHandler):
 			result = urlfetch.fetch(url=api_url, payload={}, method=urlfetch.POST, headers = { 'Authorization' : Konto.get('twitter').as_basic_auth_header() })
 			if result.status_code == 200:
 				logging.info("Successfully updated twitter status")
+				logging.info(result.content)
 			else:
 				logging.error("Twitter returned status code %i" % result.status_code)
 				logging.error(result.content)
@@ -103,7 +104,7 @@ class MailHandler(CoreHandler):
 
 %s
 
--------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------
 
 Ordet er fremmet av: %s
 Nye ord fremmes her: %s
