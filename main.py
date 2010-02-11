@@ -7,6 +7,7 @@ from application.authorization import Authorization
 from application.controllers.cron import ValgHandler,SettDagensOrdHandler,TwitterHandler, MailHandler
 from application.controllers.admin import BidragsytereVisningsHandler, BidragsyterSvartelisteHandler
 from application.controllers.comments import LeggInnKommentarHandler, VisKommentarHandler
+from application.controllers.likes import LikerHandler
 from application.controllers.word import NyttOrdHandler, ForslagHandler, TilGodkjenningHandler, NesteDagensOrdHandler, StemmeHandler, VisDagensOrdHandler, OrdHandler
 from application.controllers.feed import FeedHandler
 from application.controllers.person import BidragsyterHandler
@@ -26,6 +27,8 @@ application = webapp.WSGIApplication(
 									  ('/ord/(.*)', OrdHandler),
 									  ('/kommentar/ny', LeggInnKommentarHandler),
 									  ('/kommentar/(.+)', VisKommentarHandler),
+									  ('/liker/ny', LikerHandler),
+									  ('/liker/(.+)', LikerHandler),
 									  ('/admin/bidragsyter', BidragsytereVisningsHandler),
 									  ('/admin/bidragsyter/svartelist', BidragsyterSvartelisteHandler),
 									  ('/person/(.+)', BidragsyterHandler)],

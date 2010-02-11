@@ -5,9 +5,24 @@
 {% endblock %}
 {% block overskrift %}{% endblock %}
 {% block innhold %}
-<div class="ui-widget ui-widget-content ui-corner-all dagens-ord">
-	<h2>{{ ord.navn }}</h2>
-	<blockquote>{{ ord.beskrivelse }}</blockquote>
+
+<div class="ui-widget ui-widget-content ui-corner-all dagens-ord" style="padding:2px">
+	<div>
+		<h2>{{ ord.navn }}</h2>
+		<p>foreslått av 
+			{% if ord.bidragsyter %}
+				<a href="/person/{{ ord.bidragsyter.key }}">{{ ord.bidragsyter.visningsnavn }}</a>
+			{% else %}
+				{{ ord.bnavn }}
+			{% endif %}
+			<span id="numberOfLikes"></span>
+		</p>
+		<blockquote>{{ ord.beskrivelse }}</blockquote>
+	</div>
+	<ul>
+		<li id="like-it-not" class="hidden"><a href="#" id="do-like-it">Jeg liker dette</a></li>
+		<li id="like-it" class="hidden"> Du liker dette (<a href="#" id="do-unlike-it">slutt å like</a>)</li>	
+	</ul>
 </div>
 
 <div id="metadata" class="metadata">
@@ -79,11 +94,51 @@ $(document).ready(function() {
 			}
 		}
 	});	
+	
+	function vis(element) {
+		element.removeClass('hidden').addClass('visible');
+	}
 		
+	function skjul(element) {
+		element.removeClass('visible').addClass('hidden');
+	}
+	
 	$.get('/kommentar/urn:dagensordibekk:{{ ord.key }}', function (data) {
 		insertDataAndUpdateCommentsHeader(data);
 		commentSection.show('drop');
 	}, 'html');
+	
+	function oppdaterLikerVisning(data) {
+		if (data.errorCode != 0)
+		{
+			alert('Dette er flaut. Noe uforutsett skjedde. Feilkode=' + data.errorCode);
+		}
+		if (data.likerDuOrdet) {
+			skjul($('#like-it-not'));
+			vis($('#like-it'));
+		} else {
+			vis($('#like-it-not'));
+			skjul($('#like-it'));
+		}
+		if (data.numberOfLikes != 0) {
+			$('#numberOfLikes').text(", " + data.numberOfLikes + " person" + (data.numberOfLikes == 1 ? "" : "er") + " liker dette ordet");
+		} else $('#numberOfLikes').text('');
+	}
+
+	$.getJSON('/liker/urn:dagensordibekk:{{ ord.key }}', oppdaterLikerVisning);
+		
+	$("#do-like-it").click(function() {
+		$.post('{% url LikerHandler %}', { 'uri':$('#kommentar-uri').val() }, oppdaterLikerVisning, 'json');
+	});
+	
+	$('#do-unlike-it').click(function() {
+		$.ajax({
+			url 	: '/liker/urn:dagensordibekk:{{ ord.key }}',
+			type 	: 'delete',
+			dataType: 'json',
+			success	: oppdaterLikerVisning
+		});
+	});
 });
 </script>
 {% endblock %}

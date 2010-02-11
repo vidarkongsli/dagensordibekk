@@ -58,6 +58,19 @@ class Kommentar(db.Model):
 		gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(self.bidragsyter.googleKonto.email().lower()).hexdigest(), 'size':'40'})
 		return gravatar_url
 
+class Liker(db.Model):
+	bidragsyter = db.ReferenceProperty(Bidragsyter)
+	tidspunkt = db.DateTimeProperty(auto_now_add=True)
+	uri = db.StringProperty()
+
+	@staticmethod
+	def antall_liker(uri):
+		return Liker.all().filter('uri = ', uri).count()
+		
+	@staticmethod
+	def fra_person(uri, bidragsyter):
+		return Liker.all().filter('uri =', uri).filter('bidragsyter =', bidragsyter).get()
+	
 class Konto(db.Model):
 	navn = db.StringProperty()
 	brukernavn = db.StringProperty()

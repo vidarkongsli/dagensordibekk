@@ -33,3 +33,12 @@ body { width:100% }
 .comment-metadata { background: transparent no-repeat scroll left top; padding-left: 30pt; min-height: 36px }
 .comment-data { margin: 10px 5px 10px 0; }
 #comment-dialog { display:none }
+
+.dagens-ord div			{ margin-left:10pt }
+.dagens-ord h2			{ margin-bottom:2pt }
+.dagens-ord p			{ margin:0;	margin-left:6pt;	color:#C5C5C5; }
+.dagens-ord ul			{ padding:5px;background-color:#F5F5F5;margin:0;color:#555555 }
+.dagens-ord li 			{ bullet-style:none }
+.dagens-ord li.visible 	{ display:inline }
+.dagens-ord li.hidden  	{ display:none }
+.dagens-ord li a 		{ hover: pointer; }
