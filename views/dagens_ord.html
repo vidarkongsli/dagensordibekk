@@ -26,20 +26,6 @@
 </div>
 
 <div id="metadata" class="metadata">
-	<h3><a href="#">Mer informasjon</a></h3>
-	<div>
-		<ul>
-			<li>
-				Foreslått av 
-				{% if ord.bidragsyter %}
-					<a href="/person/{{ ord.bidragsyter.key }}">{{ ord.bidragsyter.visningsnavn }}</a>
-				{% else %}
-					{{ ord.bnavn }}
-				{% endif %}
-			</li>
-			<li>Stemmer (for/mot): {{ ord.stemmerFor|length }}/{{ ord.stemmerMot|length }}
-		</ul>
-	</div>
 	<h3 id="comments"><a href="#">Ingen kommentarer</a></h3>
 	<div>
 		<ul></ul>
