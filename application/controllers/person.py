@@ -14,7 +14,10 @@ class BidragsyterHandler(CoreHandler):
 	@login_required
 	def get(self, key):
 		user = users.get_current_user()
-		bidragsyter = Bidragsyter.all().filter('__key__ =', db.Key(key)).get()
+		if key == 'meg':
+			bidragsyter = Bidragsyter.all().filter('googleKonto = ', user).get()
+		else:
+			bidragsyter = Bidragsyter.all().filter('__key__ =', db.Key(key)).get()
 		if bidragsyter == None:
 			self.error(404)
 		self.renderUsingTemplate('../../views/bidragsyter.html', { 'bidragsyter': bidragsyter, 'edit' : (user == bidragsyter.googleKonto)})
