@@ -1,22 +1,23 @@
 {% extends "_master.html" %}
-{% block overskrift %}Foreslå nytt ord{% endblock %}
+{% block overskrift %}{% endblock %}
 {% block innhold %}
-<div id="skjema">
-		<form action="">
-			<div id="message">
-				Ordet '<span></span>' er lagt i forslagskassen. Alle ordene i forslagskassen kan du finne
-				<a href="{% url TilGodkjenningHandler %}" title="Lenke til liste over alle ord som er på valg"> her</a>.<br/>
-				Takk for ditt bidrag!
-			</div>
-			<div class="errormessage">Ordet finnes allerede!</div>
-			<div>
-				<label for="ord">Ord:</label>
-				<input id="ord" name="ord"></input>
-				<label for="beskrivelse">Beskrivelse:</label>
-				<textarea cols="40" rows="5" id="beskrivelse" name="beskrivelse"></textarea>
-				<button value="Send forslag">Send forslag</button>
-			</div>
-		</form>
+<div class="boks" id="skjema">
+	<h2>Foreslå nytt ord</h2>
+	<form action="">
+		<div id="message">
+			Ordet '<span></span>' er lagt i forslagskassen. Alle ordene i forslagskassen kan du finne
+			<a href="{% url TilGodkjenningHandler %}" title="Lenke til liste over alle ord som er på valg"> her</a>.<br/>
+			Takk for ditt bidrag!
+		</div>
+		<div class="errormessage">Ordet finnes allerede!</div>
+		<div>
+			<label for="ord">Ord:</label>
+			<input id="ord" name="ord"></input>
+			<label for="beskrivelse">Beskrivelse:</label>
+			<textarea cols="40" rows="5" id="beskrivelse" name="beskrivelse"></textarea>
+			<button value="Send forslag">Send forslag</button>
+		</div>
+	</form>
 </div>
 
 <div id="dialog" style="display:none">Dette ordet finnes allerede!</div>

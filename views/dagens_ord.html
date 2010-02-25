@@ -4,7 +4,7 @@
 <script src="/js/comments.jquery.js" type="text/javascript"></script>{% endblock %}
 {% block overskrift %}{% endblock %}
 {% block innhold %}
-<div class="dagens-ord">
+<div class="boks dagens-ord">
 	<h2>{{ ord.navn }}</h2>
 	<p>foreslått av 
 		{% if ord.bidragsyter %}
@@ -15,7 +15,7 @@
 		<span id="numberOfLikes"></span>
 	</p>
 	<blockquote>{{ ord.beskrivelse }}</blockquote>
-	<ul>
+	<ul class="footer">
 		<li class="hidden"><a href="#">Jeg liker dette</a></li>
 		<li class="hidden"> Du liker dette (<a href="#">slutt å like</a>)</li>	
 	</ul>

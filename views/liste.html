@@ -7,30 +7,27 @@
 <script type="text/javascript">var words = new Array();</script>
 <ul id="ordliste">
 {% for o in ord %}
-	<li class="ord" id="ord-{{ o.key.id }}">
+	<li class="boks" id="ord-{{ o.key.id }}">
 		<script type="text/javascript">words[words.length] = '{{ o.key.id }}';</script>
-		<span class="forslag">{{ o.navn }}</span>
-
-		<span class="stemmer">
-			(<span class="stemmefor">{{ o.stemmerFor|length }}</span> /	<span class="stemmemot">{{ o.stemmerMot|length }}</span>)
-		</span>
-
-		<span class="kilde">
-			{% if o.bidragsyter %}
+		<h3>{{ o.navn }}
+			<span class="stemmer">
+				(<span class="stemmefor">{{ o.stemmerFor|length }}</span> /	<span class="stemmemot">{{ o.stemmerMot|length }}</span>)
+			</span>
+		</h3>
+		<p>Foreslått av {% if o.bidragsyter %}
 				<a href="{% url BidragsyterHandler o.bidragsyter.key %}">{{ o.bidragsyter.visningsnavn }}</a>
 			{% else %}
 				{{ o.bnavn }}
 			{% endif %}
-		</span>
-			
-		<p style="clear:both" />
+		</p>
+		<blockquote>{{o.beskrivelse }}</blockquote>
 		<span class="errormessage"></span>
 		<span class="message"></span>
-		<span class="stemming">
+		<div class="stemming">
 			<a href="#" title="Stem for!" class="stemmefor">Ja</a>
 			<a href="#" title="Stem mot!" class="stemmemot">Nei</a>
-		</span>
-		<div class="beskrivelse">{{o.beskrivelse }}</div>
+		</div>
+		<div style="clear:both" />
 	</li>
 {% endfor %}
 </ul>

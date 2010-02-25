@@ -3,8 +3,8 @@ body {
 	font-family: "Arial", sans-serif; 
 }
 
-h2 {
-	margin: 40px 0px 0px 0px;
+h2,h3 {
+	margin: 20px 20px 0 20px;
 }
 
 form label {
@@ -23,7 +23,6 @@ button {
 	margin: 5px 0px 0px 0px;
 	cursor: pointer;
 }
-
 
 #message, .message {
 	margin: 5px 0px 0px 0px;
@@ -47,62 +46,32 @@ button {
 	list-style: none;
 }
 
-.ord {
-	border: 1px solid black;
-	margin: 0px 0px 10px 0px;
-}
-
-.ord .forslag {
-	float: left;
-	font-weight: bold;
-}
-
-.ord .kilde {
-	float: right;
-	font-size: 80%;
-}
-
-.ord .stemming {
-	float: right;
-}
-
-.ord .stemming a {
-	color: #fff;
-	padding: 1px 8px;
-	margin: 0px 0px 0px 14px;
-	text-decoration: none;
-}
-
-.ord .stemmer {
-	margin: 0px 5px;
-}
-
-.ord .stemmer .stemmefor {
+.stemmer .stemmefor {
 	color: #0f0;
 }
 
-.ord .stemmer .stemmemot {
+.stemmer .stemmemot {
 	color: #f00;
 }
 
-
-.ord .stemming .stemmefor {
+.stemming .stemmefor {
 	background-color: #0f0;
 }
 
-.ord .stemming .stemmemot {
+.stemming .stemmemot {
 	background-color: #f00;
 }
 
 .dagens-ord li.visible 	{ display:inline }
 .dagens-ord li.hidden  	{ display:none }
+.boks ul.footer			{ padding:5px;background-color:#F5F5F5;margin:0;color:#555555; }
+.boks 					{ border: 1px solid #D3D3D3; padding: 0 }
+.boks div					{ margin: 10px 30px 10px 30px; }
+.boks p					{ margin: 10px 30px 10px 30px;	color:#C5C5C5; }
+.boks .stemming 			{ padding:5px;background-color:#F5F5F5;margin:0; float:right; padding: 1px 8px; }
+.boks .stemming a		{ color: #fff; }
 
-.dagens-ord { border: 1px solid #D3D3D3; padding: 0.5em 1em; }
-
-.dagens-ord h2			{ margin-bottom:2pt }
-.dagens-ord ul			{ padding:5px;background-color:#F5F5F5;margin:0;color:#555555 }
-
-.dagens-ord p			{ margin:0;	margin-left:6pt;	color:#C5C5C5; }
+li.boks 					{ margin-bottom: 20px }
 
 #main {
 	margin: 20px auto;
