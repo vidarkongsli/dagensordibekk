@@ -1,4 +1,4 @@
-﻿{% for kommentar in kommentarer %}
+{% for kommentar in kommentarer %}
 	<li class='{% cycle alt,silly %}'>
 		<div class="comment-metadata" style="background-image: url({{ kommentar.gravatarUrl }})">
 			<cite><a href="/person/{{ kommentar.bidragsyter.key }}">{{ kommentar.bidragsyter.visningsnavn }}</a> skrev:</cite>

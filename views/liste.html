@@ -1,42 +1,39 @@
-﻿{% extends "_master.html" %}
+{% extends "_master.html" %}
 {% block hode %}<script src="/js/voteon.jquery.js" type="text/javascript"></script>{% endblock %}
 {% block overskrift %}Ord til vurdering{% endblock %}
 
 {% block innhold %}
+<div id="message"></div>
+<script type="text/javascript">var words = new Array();</script>
+<ul id="ordliste">
+{% for o in ord %}
+	<li class="ord" id="ord-{{ o.key.id }}">
+		<script type="text/javascript">words[words.length] = '{{ o.key.id }}';</script>
+		<span class="forslag">{{ o.navn }}</span>
 
-	<div id="message">
-	</div>
-	<script>var words = new Array();</script>
-	<ul id="ordliste">
-    {% for o in ord %}
-		<script>words[words.length] = '{{ o.key.id }}';</script>
-    	<li class="ord" id="ord-{{ o.key.id }}">
-			<span class="forslag">{{ o.navn }}</span>
+		<span class="stemmer">
+			(<span class="stemmefor">{{ o.stemmerFor|length }}</span> /	<span class="stemmemot">{{ o.stemmerMot|length }}</span>)
+		</span>
 
-			<span class="stemmer">
-				(<span class="stemmefor">{{ o.stemmerFor|length }}</span> /	<span class="stemmemot">{{ o.stemmerMot|length }}</span>)
-			</span>
-
-			<span class="kilde">
-				{% if o.bidragsyter %}
-					<a href="{% url BidragsyterHandler o.bidragsyter.key %}">{{ o.bidragsyter.visningsnavn }}</a>
-				{% else %}
-					{{ o.bnavn }}
-				{% endif %}
-			</span>
+		<span class="kilde">
+			{% if o.bidragsyter %}
+				<a href="{% url BidragsyterHandler o.bidragsyter.key %}">{{ o.bidragsyter.visningsnavn }}</a>
+			{% else %}
+				{{ o.bnavn }}
+			{% endif %}
+		</span>
 			
-			<p style="clear:both" />
-			<span class="errormessage"></span>
-			<span class="message"></span>
-			<span class="stemming">
-				<a href="#" title="Stem for!" class="stemmefor">Ja</a>
-				<a href="#" title="Stem mot!" class="stemmemot">Nei</a>
-			</span>
-
-			<div class="beskrivelse">{{o.beskrivelse }}</div>
-		</li>
-	{% endfor %}
-	</ul>
+		<p style="clear:both" />
+		<span class="errormessage"></span>
+		<span class="message"></span>
+		<span class="stemming">
+			<a href="#" title="Stem for!" class="stemmefor">Ja</a>
+			<a href="#" title="Stem mot!" class="stemmemot">Nei</a>
+		</span>
+		<div class="beskrivelse">{{o.beskrivelse }}</div>
+	</li>
+{% endfor %}
+</ul>
 
 <script type="text/javascript">
 $(function() {

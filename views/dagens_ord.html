@@ -1,4 +1,4 @@
-﻿{% load i18n %}{% extends "_master.html" %}
+{% load i18n %}{% extends "_master.html" %}
 {% block hode %}<link rel="alternate" type="application/atom+xml" title="Dagens Ord Atom Syndication" href="{% url FeedHandler %}" />
 <script src="/js/likeit.jquery.js" type="text/javascript"></script>
 <script src="/js/comments.jquery.js" type="text/javascript"></script>{% endblock %}
@@ -23,10 +23,10 @@
 
 <div class="comments">
 	<h3><a href="#">Ingen kommentarer</a></h3>
-	<ul></ul>
-	<form>
+	<ul><li></li></ul>
+	<form action="">
 		<label for="kommentar">Ny kommentar:</label><br />
-		<textarea cols="40" rows="5" name="kommentar"></textarea>
+		<textarea cols="40" rows="5" id="kommentar" name="kommentar"></textarea>
 		<input type="hidden" name="uri" value="urn:dagensordibekk:{{ ord.key }}" />
 		<button>Kommentér</button>
 	</form>

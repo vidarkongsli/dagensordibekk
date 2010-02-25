@@ -1,13 +1,7 @@
-﻿{% load i18n %}
+{% load i18n %}
 {% extends "_master.html" %}
 {% block overskrift %}{% endblock %}
-{% block hode %}
-<script src="/js/jquery.jeditable.mini.js"></script>
-<style>
-.inline-edit .form { display : none }
-.inline-edit { display: inline }
-</style>
-{% endblock %}
+{% block hode %}<script type="text/javascript" src="/js/jquery.jeditable.mini.js"></script>{% endblock %}
 {% block innhold %}
 <div class="ui-widget ui-widget-content ui-corner-all bidragsyter">
 	<h2 class="editable" id="nickname">{{ bidragsyter.visningsnavn }}</h2>
@@ -41,9 +35,6 @@ $(document).ready(function() {
 		 data      : { '1' : 'Ja', '0' : 'Nei', 'selected' : '0' },
 		 type      : 'select'
      });
-	 
-	  
-	 
 });
 </script>
 {% endif %}

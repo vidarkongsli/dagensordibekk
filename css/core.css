@@ -151,3 +151,6 @@ button {
 .comment-data {
 	margin: 10px 5px 10px 0;
 }
+
+.inline-edit .form { display : none }
+.inline-edit { display: inline }

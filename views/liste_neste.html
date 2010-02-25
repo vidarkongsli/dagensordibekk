@@ -1,9 +1,9 @@
-﻿{% extends "_master.html" %}
+{% extends "_master.html" %}
 {% block overskrift%}Neste dagens ord{% endblock %}
 {% block innhold %}
-	<ul>
-		{% for ordet in ord %}
-		<li><a href="/ord/{{ ordet.navn }}">{{ ordet.navn }}</a></li>
-		{% endfor %}
-	</ul>
+<ul>
+	{% for ordet in ord %}
+	<li><a href="/ord/{{ ordet.navn }}">{{ ordet.navn }}</a></li>
+	{% endfor %}
+</ul>
 {% endblock %}

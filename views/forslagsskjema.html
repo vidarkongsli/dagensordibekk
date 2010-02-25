@@ -1,7 +1,6 @@
-﻿{% extends "_master.html" %}
+{% extends "_master.html" %}
 {% block overskrift %}Foreslå nytt ord{% endblock %}
 {% block innhold %}
-
 <div id="skjema">
 		<form action="">
 			<div id="message">
@@ -12,9 +11,9 @@
 			<div class="errormessage">Ordet finnes allerede!</div>
 			<div>
 				<label for="ord">Ord:</label>
-				<input name="ord"></input>
+				<input id="ord" name="ord"></input>
 				<label for="beskrivelse">Beskrivelse:</label>
-				<textarea rows="5" name="beskrivelse"></textarea>
+				<textarea cols="40" rows="5" id="beskrivelse" name="beskrivelse"></textarea>
 				<button value="Send forslag">Send forslag</button>
 			</div>
 		</form>
