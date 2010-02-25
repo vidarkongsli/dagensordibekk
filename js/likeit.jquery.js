@@ -12,6 +12,10 @@
 		var opts = $.extend({}, $.fn.likeIt.defaults, options);
 	
 		return this.each(function () {
+			if (!(opts.id)) {
+				alert("jQuery 'likeIt' plugin config error. Id not given");
+				return false;
+			}
 			var doesNotLikeItSection = $('li:first', this);
 			var likesItSection = $('+li', doesNotLikeItSection);
 			
@@ -36,7 +40,7 @@
 			$.getJSON(opts.urlGetAndDelete, oppdaterLikerVisning);
 		
 			$('a', doesNotLikeItSection).click(function() {
-				$.post(opts.urlPost, { 'uri':$('#kommentar-uri').val() }, oppdaterLikerVisning, 'json');
+				$.post(opts.urlPost, { 'uri':opts.id }, oppdaterLikerVisning, 'json');
 			});
 	
 			$('a', likesItSection).click(function() {

@@ -2,24 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="no" xml:lang="no">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" href="/css/smoothness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
 		<link type="text/css" href="/css/core.css" rel="stylesheet" />
-		
-		<script src="http://www.google.com/jsapi"></script>
-		<script>
+		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+		<script type="text/javascript">
 			google.load("jquery", "1.3.2");
 			google.load("jqueryui", "1.7.2");
 		</script>
+		<title>Dagens ord</title>
 		{% block hode %}{% endblock %}
 	</head>
   <body><div id="main">
 	<h1>Dagens Ord</h1>
-	<ul class="toppmeny">
-		<li><a href="{% url VisDagensOrdHandler %}">Dagens Ord</a></li>
-		<li><a href="{% url NyttOrdHandler %}">Foreslå ord</a></li>
-		<li><a href="{% url TilGodkjenningHandler %}">På valg</a></li>
-		<li><a href="{% url NesteDagensOrdHandler %}">Neste ord</a></li>
-		<li><a href="/person/meg">Om meg</a></li>
+	<ul class="toppmeny">	
+		<li><a href='{% url VisDagensOrdHandler %}'>Dagens Ord</a></li>
+		<li><a href='{% url NyttOrdHandler %}'>Foreslå ord</a></li>
+		<li><a href='{% url TilGodkjenningHandler %}'>På valg</a></li>
+		<li><a href='{% url NesteDagensOrdHandler %}'>Neste ord</a></li>
+		<li><a href='{% url BidragsyterHandler "meg" %}'>Om meg</a></li>
 	</ul>
 	<h2>{% block overskrift %}Her er overskriften{% endblock %}</h2>
 	

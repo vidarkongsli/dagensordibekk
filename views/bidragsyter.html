@@ -22,14 +22,6 @@
 	<p>(Klikk på teksten for å redigere.)</p>
 	{% endif %}
 </div>
-
-<div id="comment-dialog">
-	<form>
-		<label for="kommentar">Kommentar:</label><br />
-		<textarea cols="40" rows="5" id="kommentar" name="kommenar"></textarea>
-		<input type="hidden" id="kommentar-uri" name="uri" value="urn:dagensordibekk:{{ ord.key }}" />
-	</form>
-</div>
 {% if edit %}
 <script type="text/javascript">
 $(document).ready(function() {

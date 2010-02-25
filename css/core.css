@@ -1,44 +1,153 @@
-body{ font: 62.5% "Trebuchet MS", sans-serif; margin: 50px;}
-.demoHeaders { margin-top: 2em; }
-#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
-#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
-ul#icons {margin: 0; padding: 0;}
-ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
-ul#icons span.ui-icon {float: left; margin: 0 4px;}
-button {
-	margin: .5em 0 .5em 8px;
-	color: #555555;
-	background: #e6e6e6 url(css/smoothness/images/ui-bg_glass_75_dadada_1x400.png) 0 50% repeat-x;
-	font-size: 1em;
-	border: 1px solid #d3d3d3;
-	cursor: pointer;
-	padding: .2em .6em .3em .6em;
-	line-height: 1.4em;
+body {
+	width: 100%;
+	font-family: "Arial", sans-serif; 
 }
-form .ui-state-highlight { padding: 0pt 0.7em; }
-#message { display:none }
-#ordliste #stemmepanel * { float: left; }
-#ordliste label { clear: both; }
-#ordliste .ui-widget { display:none; }
-#main { margin: 20px auto; width: 600px }
-body { width:100% }
-.toppmeny li { display:inline; }
-.dagens-ord { padding: 0.5em 1em}
-			
 
-.metadata .alt { background-color: #FAFAFA; border-top: 1px solid #EEEEEE; border-bottom: 1px solid #EEEEEE }
-.comment-metadata p { margin:0 }
-.metadata ul { padding-left: 10px }
-.metadata li { list-style-type: none; margin: 10px 0; padding: 10px }
-.comment-metadata { background: transparent no-repeat scroll left top; padding-left: 30pt; min-height: 36px }
-.comment-data { margin: 10px 5px 10px 0; }
-#comment-dialog { display:none }
+h2 {
+	margin: 40px 0px 0px 0px;
+}
 
-.dagens-ord div			{ margin-left:10pt }
-.dagens-ord h2			{ margin-bottom:2pt }
-.dagens-ord p			{ margin:0;	margin-left:6pt;	color:#C5C5C5; }
-.dagens-ord ul			{ padding:5px;background-color:#F5F5F5;margin:0;color:#555555 }
-.dagens-ord li 			{ bullet-style:none }
+form label {
+	display: block;
+	margin: 10px 0px 0px 0px;
+}
+
+form textarea {
+	width: 100%;
+}
+
+button {
+	display: block;
+	background-color: #ffdddd;
+	border: 1px solid #d3d3d3;
+	margin: 5px 0px 0px 0px;
+	cursor: pointer;
+}
+
+
+#message, .message {
+	margin: 5px 0px 0px 0px;
+	display: none;
+	background-color: #ffc;
+	font-size: 80%;
+}
+
+.errormessage {
+	margin: 5px 0px 0px 0px;
+	display: none;
+	background-color: #ff7777;
+	font-size: 80%;
+}
+
+#ordliste {
+	padding: 0px;
+}
+
+#ordliste li {
+	list-style: none;
+}
+
+.ord {
+	border: 1px solid black;
+	margin: 0px 0px 10px 0px;
+}
+
+.ord .forslag {
+	float: left;
+	font-weight: bold;
+}
+
+.ord .kilde {
+	float: right;
+	font-size: 80%;
+}
+
+.ord .stemming {
+	float: right;
+}
+
+.ord .stemming a {
+	color: #fff;
+	padding: 1px 8px;
+	margin: 0px 0px 0px 14px;
+	text-decoration: none;
+}
+
+.ord .stemmer {
+	margin: 0px 5px;
+}
+
+.ord .stemmer .stemmefor {
+	color: #0f0;
+}
+
+.ord .stemmer .stemmemot {
+	color: #f00;
+}
+
+
+.ord .stemming .stemmefor {
+	background-color: #0f0;
+}
+
+.ord .stemming .stemmemot {
+	background-color: #f00;
+}
+
 .dagens-ord li.visible 	{ display:inline }
 .dagens-ord li.hidden  	{ display:none }
-.dagens-ord li a 		{ hover: pointer; }
+
+.dagens-ord { border: 1px solid #D3D3D3; padding: 0.5em 1em; }
+
+.dagens-ord h2			{ margin-bottom:2pt }
+.dagens-ord ul			{ padding:5px;background-color:#F5F5F5;margin:0;color:#555555 }
+
+.dagens-ord p			{ margin:0;	margin-left:6pt;	color:#C5C5C5; }
+
+#main {
+	margin: 20px auto;
+	width: 600px;
+}
+
+.toppmeny { 
+	padding: 0px;
+}
+
+.toppmeny li {
+	display: inline;
+	margin: 0px 5px 0px 0px;
+	text-decoration: none;
+}
+
+.toppmeny li a {
+	border: 1px solid #d3d3d3;
+	background-color: #eeefff;
+	padding: 3px 6px;
+	text-decoration: none;
+}
+	
+.comments .alt {
+	background-color: #FAFAFA;
+	border-top: 1px solid #EEEEEE;
+	border-bottom: 1px solid #EEEEEE
+}
+
+.comments ul {
+	padding-left: 10px
+}
+
+.comments li {
+	list-style-type: none; 
+	margin: 10px 0; 
+	padding: 10px 
+}
+
+.comment-metadata {
+	background: transparent no-repeat scroll left top; 
+	padding-left: 30pt;
+	min-height: 36px
+}
+
+.comment-data {
+	margin: 10px 5px 10px 0;
+}
