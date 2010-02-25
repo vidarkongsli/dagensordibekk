@@ -25,17 +25,22 @@ button {
 }
 
 #message, .message {
-	margin: 5px 0px 0px 0px;
 	display: none;
 	background-color: #ffc;
 	font-size: 80%;
+	border-top: 1px solid #ff0;
+	border-bottom: 1px solid #ff0;
+	padding: 5px;
 }
 
 .errormessage {
 	margin: 5px 0px 0px 0px;
 	display: none;
-	background-color: #ff7777;
+	background-color: #ffbbbb;
 	font-size: 80%;
+	border-top: 1px solid #f00;
+	border-bottom: 1px solid #f00;
+	padding: 5px;
 }
 
 #ordliste {
