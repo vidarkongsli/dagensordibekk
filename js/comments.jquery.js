@@ -19,7 +19,7 @@
 				if (numberOfComments == 0) {
 					newText = "Ingen kommentarer";
 				} else if (numberOfComments == 1) {
-					newText = "Én kommentar";
+					newText = "Ã‰n kommentar";
 				} else {
 					newText = "" + numberOfComments + " kommentarer";
 				}
