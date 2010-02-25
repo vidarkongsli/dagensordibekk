@@ -87,15 +87,7 @@ $(document).ready(function() {
 			}
 		}
 	});	
-	
-	function vis(element) {
-		element.removeClass('hidden').addClass('visible');
-	}
 		
-	function skjul(element) {
-		element.removeClass('visible').addClass('hidden');
-	}
-	
 	$.get('/kommentar/urn:dagensordibekk:{{ ord.key }}', function (data) {
 		insertDataAndUpdateCommentsHeader(data);
 		commentSection.show('drop');
