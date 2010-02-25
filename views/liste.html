@@ -9,11 +9,13 @@
 {% for o in ord %}
 	<li class="boks" id="ord-{{ o.key.id }}">
 		<script type="text/javascript">words[words.length] = '{{ o.key.id }}';</script>
+		<a name="a-{{ o.key.id }}">
 		<h3>{{ o.navn }}
 			<span class="stemmer">
 				(<span class="stemmefor">{{ o.stemmerFor|length }}</span> /	<span class="stemmemot">{{ o.stemmerMot|length }}</span>)
 			</span>
 		</h3>
+		</a>
 		<p>Foreslått av {% if o.bidragsyter %}
 				<a href="{% url BidragsyterHandler o.bidragsyter.key %}">{{ o.bidragsyter.visningsnavn }}</a>
 			{% else %}

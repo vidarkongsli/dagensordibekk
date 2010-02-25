@@ -27,9 +27,11 @@
 			var ordId = this.id.split('-')[1];
 			$('a.stemmefor', this).click(function() {
 				avgiStemme(ordId, true);
+				return false;
 			});
 			$('a.stemmemot', this).click(function() {
 				avgiStemme(ordId, false);
+				return false;
 			});
 		});
 	};
