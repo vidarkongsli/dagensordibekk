@@ -1,4 +1,5 @@
 {% extends "_master.html" %}
+{% block hode %}<script src="/js/jquery.validate.pack.js" type="text/javascript"></script>{% endblock %}
 {% block overskrift %}{% endblock %}
 {% block innhold %}
 <div class="boks" id="skjema">
@@ -12,34 +13,41 @@
 		<div class="errormessage">Ordet finnes allerede!</div>
 		<div>
 			<label for="ord">Ord:</label>
-			<input id="ord" name="ord"></input>
+			<input id="ord" name="ord" type="text" class="required"></input>
 			<label for="beskrivelse">Beskrivelse:</label>
-			<textarea cols="40" rows="5" id="beskrivelse" name="beskrivelse"></textarea>
-			<button value="Send forslag">Send forslag</button>
+			<textarea cols="40" rows="5" id="beskrivelse" name="beskrivelse" class="required"></textarea>
+			<input type="submit" name="submit" value="Send forslag" />
 		</div>
 	</form>
 </div>
 
 <div id="dialog" style="display:none">Dette ordet finnes allerede!</div>
 <script type="text/javascript">
-$(document).ready(function() {	
-	$("button").click(function() {
-		var forslagsData = {
-			'ord' : $("input[name='ord']").val(),
-			'beskrivelse' : $("textarea[name='beskrivelse']").val()
-		};
-		
-		$.post("{% url ForslagHandler %}", forslagsData, function(data) {
-			if (data.errorCode == 0)
-			{
-				$('#message span').text(forslagsData.ord);
-				$('#message').show();
-				$(':input').val('');
-			} else if (data.errorCode == 1) {
-				$('.errormessage').show();
-			}
-		}, "json");
-		return false;
+$(document).ready(function() {
+	$("form").validate({
+		submitHandler : function(form) {
+			var forslagsData = {
+				'ord' : form.elements['ord'].value,
+				'beskrivelse' : form.elements['beskrivelse'].value
+			};
+			$.post("{% url ForslagHandler %}", forslagsData, function(data) {
+				if (data.errorCode == 0)
+				{
+					$('.errormessage').hide();
+					$('#message span').text(forslagsData.ord);
+					$('#message').show();
+					form.elements['ord'].value = '';
+					form.elements['beskrivelse'].value = '';
+				} else if (data.errorCode == 1) {
+					$('#message').hide();
+					$('.errormessage').show();
+				}
+			}, "json");
+		},
+		messages : {
+			ord			: "Du må skrive inn et ord.",
+			beskrivelse : "Du må skrive inn en beskrivelse av ordet."
+		}
 	});
 });
 </script>

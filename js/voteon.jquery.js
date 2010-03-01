@@ -12,12 +12,16 @@
 			function avgiStemme(ordId, stemmeFor ) {
 				$.post(opts.urlPost, { 'ord-nokkel' : ordId, 'erStemmeFor' : stemmeFor }, function(data) {
 					if (data.errorCode == 0) {
+						$('.errormessage', context).hide();
 						$('span.stemme' + (stemmeFor?'for':'mot'), context).text(data.antallStemmer);
 						$('.message', context).text("Din stemme er registert.");
 						$('.message', context).show();
 					} else if (data.errorCode == 1) {
+						$('.errormessage', context).hide();
+						$('.message', context).hide();
 						alert('Dette er flaut. Det ser ut som at ordet ikke fins i databasen. Noe må ha gått galt...');
 					} else {
+						$('.message', context).hide();
 						$('.errormessage', context).text("Du har allerede stemt på dette ordet.");
 						$('.errormessage', context).show();
 					}
