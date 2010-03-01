@@ -132,3 +132,6 @@ li.boks 					{ margin-bottom: 20px }
 label.error { display: inline; color: #f00; }
 #skjema input[type='submit'] { display:block; }
 #skjema input[type='text'] { margin-right: 10px }
+
+/* Bidragsyter */
+ul li span#google { color: #c5c5c5; }

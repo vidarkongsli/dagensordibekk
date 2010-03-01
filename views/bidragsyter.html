@@ -6,11 +6,11 @@
 <div class="boks">
 	<h2 class="editable" id="nickname">{{ bidragsyter.visningsnavn }}</h2>
 	<ul>
-		<li>Google-konto: <span id="google">{{ bidragsyter.googleKonto }}</span></li>
-		<li>Twitter-brukernavn: <span id='twitter' class="editable">{{ bidragsyter.twitter|default:"[legg inn]" }}</span></li>
-		<li>Bekk-epost: <span id='bekk' class="editable">{{ bidragsyter.bekkAdresse|default:"[legg inn]" }}</span></li>
-		<li>Motta Dagens Ord på Bekk-epost: <span id='bekk-mailliste' class="editable-select">{{ bidragsyter.paaBekkMailliste|yesno:"Ja,Nei" }}</span></li>
-		<li>Motta Dagens Ord på Gmail-adresse: <span id='google-mailliste' class="editable-select">{{ bidragsyter.paaGoogleMailliste|yesno:"Ja,Nei" }}</span></li>
+		<li><strong>Google-konto:</strong> <span id="google">{{ bidragsyter.googleKonto }}</span></li>
+		<li><strong>Twitter-brukernavn:</strong> <span id='twitter' class="editable">{{ bidragsyter.twitter|default:"[legg inn]" }}</span></li>
+		<li><strong>Bekk-epost:</strong> <span id='bekk' class="editable">{{ bidragsyter.bekkAdresse|default:"[legg inn]" }}</span></li>
+		<li><strong>Motta Dagens Ord på Bekk-epost:</strong> <span id='bekk-mailliste' class="editable-select">{{ bidragsyter.paaBekkMailliste|yesno:"Ja,Nei" }}</span></li>
+		<li><strong>Motta Dagens Ord på Gmail-adresse:</strong> <span id='google-mailliste' class="editable-select">{{ bidragsyter.paaGoogleMailliste|yesno:"Ja,Nei" }}</span></li>
 	</ul>
 	{% if edit %}
 	<p>(Klikk på teksten for å redigere.)</p>
