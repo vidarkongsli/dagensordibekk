@@ -27,7 +27,7 @@ class BidragsyterHandler(CoreHandler):
 			field = cgi.escape(self.request.get('id'))
 			value = cgi.escape(self.request.get('value'))
 			user = users.get_current_user()
-			bidragsyter = Bidragsyter.all().filter('__key__ =', db.Key(key)).filter('googleKonto =', user).get()
+			bidragsyter = Bidragsyter.all().filter('googleKonto =', user).get()
 			if bidragsyter == None:
 				self.error(404)
 			else:
