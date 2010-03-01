@@ -129,6 +129,6 @@ li.boks 					{ margin-bottom: 20px }
 .inline-edit .form { display : none }
 .inline-edit { display: inline }
 
-#skjema label.error { display: inline; color: #f00; }
+label.error { display: inline; color: #f00; }
 #skjema input[type='submit'] { display:block; }
 #skjema input[type='text'] { margin-right: 10px }

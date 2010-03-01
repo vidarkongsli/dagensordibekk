@@ -27,10 +27,16 @@
 			}
 			
 			$('button', form).click(function() {
-				$.post(opts.urlPost, { 'kommentar':comment.val(), 'uri':uri.val() }, function(data) {
-					insertDataAndUpdateCommentsHeader(data);
-					comment.val("");
-				},'html');
+				var newComment = comment.val().trim();
+				if (newComment == "") {
+					comment.after("<label for='" + comment.attr('name') + "' class='error'>Du må skrive innhold i kommentaren.</label>");
+				} else {
+					$("+label", comment).remove();
+					$.post(opts.urlPost, { 'kommentar':newComment, 'uri':uri.val() }, function(data) {
+						insertDataAndUpdateCommentsHeader(data);
+						comment.val("");
+					},'html');
+				}
 				return false;
 			});
 			
