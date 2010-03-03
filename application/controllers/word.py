@@ -18,7 +18,7 @@ class NyttOrdHandler(CoreHandler):
 class ForslagHandler(CoreHandler):
 	def post(self):
 		Authorization.authorize(self)
-		ord = cgi.escape(self.request.get('ord'))
+		ord = cgi.escape(self.request.get('ord')).lower()
 		besk = cgi.escape(self.request.get('beskrivelse'))
 		
 		exists = db.GqlQuery("SELECT * FROM Ord WHERE navn = :1", ord)
