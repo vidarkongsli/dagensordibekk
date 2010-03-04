@@ -14,7 +14,7 @@ class ValgHandler(webapp.RequestHandler):
 		paaValg = []
 		ordKlareForValg = Ord.gql("WHERE arbeidsflytstilstand = 0")
 		for o in ordKlareForValg:
-			if len(o.stemmerFor) + len(o.stemmerMot) >= 3:
+			if len(o.stemmerFor) + len(o.stemmerMot) >= 5:
 				if len(o.stemmerFor) > len(o.stemmerMot):
 					o.arbeidsflytstilstand = 1
 					logging.info("Ordet '%s' er godkjent" % o.navn)
