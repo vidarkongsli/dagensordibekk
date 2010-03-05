@@ -55,7 +55,7 @@ class StemmeHandler(CoreHandler):
 		antallStemmer = 0
 		Authorization.authorize(self)
 		ordNokkel = long(cgi.escape(self.request.get('ord-nokkel')))
-		stemmeFor = bool(cgi.escape(self.request.get('erStemmeFor')).capitalize())
+		stemmeFor = (cgi.escape(self.request.get('erStemmeFor')) == 'true')
 		
 		ord = Ord.get_by_id(ordNokkel)
 		bidragsyterId = Bidragsyter.hent(users.get_current_user()).key().id()
