@@ -95,8 +95,8 @@ class MailHandler(CoreHandler):
 		if dagensOrd != None:
 			googleAddresses = map(lambda x: x.googleKonto.email(), Bidragsyter.all().filter('paaGoogleMailliste =', True).fetch(100))
 			bekkAddresses = map(lambda x: x.bekkAdresse, Bidragsyter.all().filter('paaBekkMailliste', True).fetch(100))
-			logging.info('Sending mail to %s' % ','.join(googleAddresses + bekkAddresses))
-			to = googleAddresses + bekkAddresses
+			to = filter(lambda x: x != None, googleAddresses + bekkAddresses)
+			logging.info('Sending mail to %s' % ','.join(to))
 			subject = dagensOrd.navn
 			body = """
 			
