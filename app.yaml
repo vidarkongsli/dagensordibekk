@@ -13,6 +13,9 @@ handlers:
   
 - url: /js
   static_dir: js
+  
+- url: /img
+  static_dir: static/images
 
 - url: /admin/.*
   script: main.py

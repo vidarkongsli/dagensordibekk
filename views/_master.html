@@ -8,10 +8,12 @@
 			google.load("jquery", "1.3.2");
 			google.load("jqueryui", "1.7.2");
 		</script>
+		<script type="text/javascript" src="/js/jquery.flexbox.min.js"></script>
 		<title>Dagens ord</title>
 		{% block hode %}{% endblock %}
 	</head>
   <body><div id="main">
+	<div class="sokeboks"></div>
 	<h1>Dagens Ord</h1>
 	<ul class="toppmeny">	
 		<li><a href='{% url VisDagensOrdHandler %}'>Dagens Ord</a></li>
@@ -22,5 +24,16 @@
 	<h2>{% block overskrift %}Her er overskriften{% endblock %}</h2>
 	
     {% block innhold %} Innholdet kommer her...{% endblock %}
-  </div></body>
+  </div>
+  <script type="text/javascript">
+	$('.sokeboks').flexbox('/ord/sok/', {
+		initialValue : '{{ sokeord }}',
+		autoCompleteFirstMatch : false,
+		arrowQuery : 'a',
+		onSelect : function () {
+			document.location.href = '/ord/sok/' + this.value;
+		}
+	});
+  </script>
+  </body>
 </html>

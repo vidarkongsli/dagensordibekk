@@ -31,12 +31,30 @@ class ForslagHandler(CoreHandler):
 		
 		self.renderAsJson({ 'errorCode':errorCode })
 	
-class TilGodkjenningHandler(CoreHandler):
+class TilGodkjenningHandlerGammel(CoreHandler):
 	@login_required
 	def get(self):
 		alle_ord = Ord.all().filter("arbeidsflytstilstand =", 0).order('navn')
-		self.renderUsingTemplate('../../views/liste.html', { 'ord':alle_ord })
+		self.renderUsingTemplate('../../views/paavalg_gammel.html', { 'ord':alle_ord })
 
+class TilGodkjenningHandler(CoreHandler):
+	@login_required
+	def get(self):
+		if 'application/json' in self.request.headers['Accept']:
+			off = int(self.request.get('offset'))
+			alle_ord = Ord.all().filter("arbeidsflytstilstand =", 0).order('navn').fetch(20, offset=off)
+			self.renderAsJson({ 'offset': len(alle_ord) + off, 'ord': map(lambda ord: {
+				'navn' : ord.navn,
+				'id' : ord.key().id(),
+				'beskrivelse' : ord.beskrivelse,
+				'for' : len(ord.stemmerFor),
+				'mot' : len(ord.stemmerMot),
+				'bidrager' : {
+					'navn' : ord.bidragsyter.visningsnavn() if ord.bidragsyter else ord.bnavn(),
+					'id' : str(ord.bidragsyter.key()) if ord.bidragsyter else None}}, alle_ord) })
+		else:
+			self.renderUsingTemplate('../../views/paavalg.html', { })
+			
 class NesteDagensOrdHandler(CoreHandler):
 	@login_required
 	def get(self):

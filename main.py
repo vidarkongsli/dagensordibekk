@@ -8,9 +8,10 @@ from application.controllers.cron import ValgHandler,SettDagensOrdHandler,Twitte
 from application.controllers.admin import BidragsytereVisningsHandler, BidragsyterSvartelisteHandler
 from application.controllers.comments import LeggInnKommentarHandler, VisKommentarHandler
 from application.controllers.likes import LikerHandler
-from application.controllers.word import NyttOrdHandler, ForslagHandler, TilGodkjenningHandler, NesteDagensOrdHandler, StemmeHandler, VisDagensOrdHandler, OrdHandler
+from application.controllers.word import NyttOrdHandler, ForslagHandler, TilGodkjenningHandler, TilGodkjenningHandlerGammel, NesteDagensOrdHandler, StemmeHandler, VisDagensOrdHandler, OrdHandler
 from application.controllers.feed import FeedHandler
 from application.controllers.person import BidragsyterHandler
+from application.controllers.search import SokHandler
 
 application = webapp.WSGIApplication(
                                      [('/', VisDagensOrdHandler),
@@ -22,8 +23,10 @@ application = webapp.WSGIApplication(
 									  ('/ord/cron/twitter', TwitterHandler),
 									  ('/ord/cron/mail', MailHandler),
 									  ('/ord/paavalg', TilGodkjenningHandler),
+									  ('/ord/paavalg_gammel', TilGodkjenningHandlerGammel),
 									  ('/ord/feed', FeedHandler),
 									  ('/ord/neste', NesteDagensOrdHandler),
+									  ('/ord/sok/(.*)', SokHandler),
 									  ('/ord/(.*)', OrdHandler),
 									  ('/kommentar/ny', LeggInnKommentarHandler),
 									  ('/kommentar/(.+)', VisKommentarHandler),

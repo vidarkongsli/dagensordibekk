@@ -1,0 +1,52 @@
+{% extends "_master.html" %}
+{% block hode %}<script src="/js/voteon.jquery.js" type="text/javascript"></script>{% endblock %}
+{% block overskrift %}Ord til vurdering{% endblock %}
+{% block innhold %}
+<div id="message"></div>
+<ul id="ordliste"></ul>
+<script type="text/javascript">
+function fetch(offset) {
+	$.getJSON('{% url TilGodkjenningHandler %}', { 'offset' : offset }, function (data) {
+		$('#hentneste').remove();
+		$.each(data.ord, function(i, o) {
+			$('#ordliste').append(
+				"<li class='boks' id='ord-" + o.id + "'>" +
+					"<a name='a-" + o.id +"'>" +
+						"<h3>" + o.navn +
+							"<span class='stemmer'>" +
+								"(<span class='stemmefor'>" + o.for + "</span>" +
+								"/" +
+								"<span class='stemmemot'>" + o.mot + "</span>)" +
+							"</span>" +
+						"</h3" +
+					"</a>" +
+					"<p>" +
+						"Foreslått av " +
+						(o.bidrager.id != null ? "<a href='/person/" + o.bidrager.id + "'>" : "") +
+							o.bidrager.navn +
+						(o.bidrager.id != null ? "</a>" : "") +
+					"</p>" +
+					"<blockquote>" + o.beskrivelse + "</blockquote>" +
+					"<div class='errormessage'></div>" +
+					"<div class='message'></div>" + 
+					"<div class='stemming'>" +
+						"<a href='#' title='Stem for!' class='stemmefor'>Ja</a>" +
+						"<a href='#' title='Stem mot!' class='stemmemot'>Nei</a>" +
+					"</div>" +
+					"<div style='clear:both' />" +
+				"</li>"
+			);
+			$('#ord-' + o.id).voteOn({ 'urlPost':'{% url StemmeHandler %}'})
+		});
+		if (data.ord.length == 20) {
+			$('#ordliste').append(
+				"<li class='boks' id='hentneste'><p>Hent flere ord</p></li>"
+			);
+			$('#hentneste').click(function() { fetch(data.offset); });
+		}
+	});
+}
+
+$(function() { fetch (0); });
+</script>
+{% endblock %}

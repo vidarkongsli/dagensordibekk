@@ -1,3 +1,4 @@
+#encoding: utf-8
 from datetime import date
 from datetime import datetime
 from google.appengine.ext import db
@@ -41,6 +42,13 @@ class Ord(db.Model):
 	stemmerMot = db.ListProperty(long, default=[])
 	arbeidsflytstilstand = db.IntegerProperty(default=0)
 	forslagstidspunkt = db.DateTimeProperty(auto_now_add=True)
+	
+	def arbeidsflytstilstand_navn(self):
+		if self.arbeidsflytstilstand == 0:
+			return "På valg"
+		if self.arbeidsflytstilstand == 1:
+			return "Godkjent"
+		return "Avslått"
 	
 	def bnavn(self):
 		if self.bidragsyter == None:
