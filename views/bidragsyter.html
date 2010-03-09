@@ -4,6 +4,7 @@
 {% block hode %}<script type="text/javascript" src="/js/jquery.jeditable.mini.js"></script>{% endblock %}
 {% block innhold %}
 <div class="boks">
+	<img src="{{ bidragsyter.gravatarUrl }}" />
 	<h2 class="editable" id="nickname">{{ bidragsyter.visningsnavn }}</h2>
 	<ul>
 		<li><strong>Google-konto:</strong> <span id="google">{{ bidragsyter.googleKonto }}</span></li>

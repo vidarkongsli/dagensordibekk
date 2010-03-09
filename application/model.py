@@ -29,6 +29,14 @@ class Bidragsyter(db.Model):
 			bidragsyter.put()
 		return bidragsyter
 
+	def gravatarUrl(self):
+		return self.gravatarUrlWithSize(80)
+		
+	def gravatarUrlWithSize(self, size):
+		gravatar_url = "http://www.gravatar.com/avatar.php?"
+		gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(self.googleKonto.email().lower()).hexdigest(), 'size': size })
+		return gravatar_url
+		
 class Ord(db.Model):
 	navn = db.StringProperty()
 	beskrivelse = db.TextProperty()
@@ -62,9 +70,7 @@ class Kommentar(db.Model):
 	uri = db.StringProperty()
 	
 	def gravatarUrl(self):
-		gravatar_url = "http://www.gravatar.com/avatar.php?"
-		gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(self.bidragsyter.googleKonto.email().lower()).hexdigest(), 'size':'40'})
-		return gravatar_url
+		return self.bidragsyter.gravatarUrlWithSize(40)
 
 class Liker(db.Model):
 	bidragsyter = db.ReferenceProperty(Bidragsyter)

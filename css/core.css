@@ -75,7 +75,7 @@ button {
 .boks p					{ margin: 10px 30px 10px 30px;	color:#C5C5C5; }
 .boks .stemming 			{ padding:5px;background-color:#F5F5F5;margin:0; float:right; padding: 1px 8px; }
 .boks .stemming a			{ color: #fff; }
-
+.boks img				{ float:right;margin:20px }
 li.boks 					{ margin-bottom: 20px }
 
 .boks .tilstand			{ float:right; border: 1px solid #D3D3D3; padding: 10px; width: 60px }
