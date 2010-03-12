@@ -1,0 +1,27 @@
+﻿{% extends "_master.html" %}
+{% block hode %}{% endblock %}
+{% block overskrift %}{% endblock %}
+{% block innhold %}
+<form action='{% url MapBidragsyterHandler %}' method='post'>
+	<table>
+		<thead><tr><th>Konto</th><th>Navn</th></tr></thead>
+		<tbody>
+			{% for n in navn %}
+			<tr>
+				<td>
+					<select name='konto'>
+						<option value='' selected='true'></option>
+						{% for b in bidragsytere %}
+						<option value='{{ b.key }}'>{{ b.visningsnavn }}</option>
+						{% endfor %}
+					</select>
+				</td>
+				<td>
+					<input type='submit' value='{{ n }}' name='navn' /> 
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</form>
+{% endblock %}

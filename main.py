@@ -1,7 +1,7 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from application.controllers.cron import ValgHandler, SettDagensOrdHandler, TwitterHandler, MailHandler
-from application.controllers.admin import BidragsytereVisningsHandler, BidragsyterSvartelisteHandler
+from application.controllers.admin import BidragsytereVisningsHandler, BidragsyterSvartelisteHandler, MapBidragsyterHandler
 from application.controllers.comments import LeggInnKommentarHandler, VisKommentarHandler
 from application.controllers.likes import LikerHandler
 from application.controllers.word import NyttOrdHandler, ForslagHandler, TilGodkjenningHandler, TilGodkjenningHandlerGammel, NesteDagensOrdHandler, StemmeHandler, VisDagensOrdHandler, OrdHandler
@@ -30,6 +30,7 @@ application = webapp.WSGIApplication(
 									  ('/liker/(.+)', LikerHandler),
 									  ('/admin/bidragsyter', BidragsytereVisningsHandler),
 									  ('/admin/bidragsyter/svartelist', BidragsyterSvartelisteHandler),
+                                      ('/admin/bidragsyter/map', MapBidragsyterHandler),
 									  ('/person/(.+)', BidragsyterHandler)],
                                      debug=True)
 	

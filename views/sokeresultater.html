@@ -1,0 +1,18 @@
+{% extends "_master.html" %}
+{% block hode %}<script type="text/javascript" src="/js/jquery.flexbox.min.js"></script>{% endblock %}
+{% block overskrift %}Treff på '{{ sokeord }}'{% endblock %}
+{% block innhold %}
+<ul id="ordliste">
+{% for o in ord %}
+	<li class="boks" id="ord-{{ o.key.id }}">
+		<div class="tilstand {%ifequal o.arbeidsflytstilstand_navn "Godkjent" %}godkjent{%endifequal%}{%ifequal o.arbeidsflytstilstand_navn "Avslått" %}avslaatt{%endifequal%}">
+			{{ o.arbeidsflytstilstand_navn }}
+		</div>
+		<a name="a-{{ o.key.id }}">
+			<h3>{%ifequal o.arbeidsflytstilstand_navn "Godkjent" %}<a href="/ord/{{ o.navn }}">{{ o.navn }}</a>{%else%}{{ o.navn }}{%endifequal%}</h3>
+		</a>
+		<div style="clear:both" />
+	</li>
+{% endfor %}
+</ul>
+{% endblock %}

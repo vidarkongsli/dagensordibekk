@@ -11,4 +11,3 @@ class CoreHandler(webapp.RequestHandler):
     def renderAsJson(self, values):
         self.response.headers["Content-Type"] = 'application/json'
         self.response.out.write(simplejson.dumps(values))
-        
