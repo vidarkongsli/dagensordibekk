@@ -25,6 +25,11 @@ indexes:
 - kind: Ord
   properties:
   - name: arbeidsflytstilstand
+  - name: forslagstidspunkt
+
+- kind: Ord
+  properties:
+  - name: arbeidsflytstilstand
   - name: harVaertDagensOrd
   - name: forslagstidspunkt
 
