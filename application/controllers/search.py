@@ -1,11 +1,6 @@
-﻿from application.authorization import Authorization
-from application.controllers.core import CoreHandler
-from application.model import Kommentar, Bidragsyter
-from google.appengine.api import users
+﻿from .core import CoreHandler
 from google.appengine.ext import db
-import cgi
 import logging
-import os
 import urllib
 
 class SokHandler(CoreHandler):

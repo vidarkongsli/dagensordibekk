@@ -1,10 +1,6 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
- 
-from application.model import Bidragsyter
-from application.model import Ord
-from application.authorization import Authorization
-from application.controllers.cron import ValgHandler,SettDagensOrdHandler,TwitterHandler, MailHandler
+from application.controllers.cron import ValgHandler, SettDagensOrdHandler, TwitterHandler, MailHandler
 from application.controllers.admin import BidragsytereVisningsHandler, BidragsyterSvartelisteHandler
 from application.controllers.comments import LeggInnKommentarHandler, VisKommentarHandler
 from application.controllers.likes import LikerHandler

@@ -1,10 +1,8 @@
 ﻿from application.controllers.core import CoreHandler
 from application.model import Ord, Bidragsyter, Konto
 from datetime import datetime
-from django.utils import simplejson
 from google.appengine.api import mail, urlfetch
 from google.appengine.ext import webapp
-import base64
 import logging
 import urllib
 
@@ -63,7 +61,7 @@ class TwitterHandler(CoreHandler):
         if dagensOrd != None:
             status = (u"%s (%s ): %s" % ( dagensOrd.navn, self.shortenUrl(u'http://dagensordibekk.appspot.com/ord/' + dagensOrd.navn), dagensOrd.beskrivelse)).encode('utf-8')
             if len(status) > 140:
-            	status = status[:137] + '...'
+                status = status[:137] + '...'
             api_url = "http://twitter.com/statuses/update.json?status=%s" % urllib.quote(status)
             result = urlfetch.fetch(url=api_url, payload={}, method=urlfetch.POST, headers = { 'Authorization' : Konto.get('twitter').as_basic_auth_header() })
             if result.status_code == 200:

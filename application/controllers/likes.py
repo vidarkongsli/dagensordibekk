@@ -1,15 +1,12 @@
-﻿import cgi
-import os
-import urllib
-
 from application.authorization import Authorization
-from application.controllers.core import CoreHandler
-from application.model import Kommentar, Bidragsyter, Liker
+from .core import CoreHandler
+from application.model import Bidragsyter, Liker
 from google.appengine.api import users
 from google.appengine.ext.webapp.util import login_required
-    
+import cgi
+import urllib
+
 class LikerHandler(CoreHandler):
-    
     def post(self):
         if Authorization.authorize(self):
             liker_uri = cgi.escape(self.request.get('uri'))

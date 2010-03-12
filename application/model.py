@@ -1,5 +1,5 @@
 #encoding: utf-8
-from datetime import date, datetime
+from datetime import datetime
 from google.appengine.ext import db
 import base64
 import urllib

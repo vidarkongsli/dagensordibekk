@@ -1,12 +1,11 @@
+from .core import CoreHandler
 from application.authorization import Authorization
-from application.controllers.core import CoreHandler
 from application.model import Ord, Bidragsyter
 from google.appengine.api import users
-from google.appengine.ext import webapp, db
+from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required
 import cgi
 import logging
-import os
 import urllib
 
 class NyttOrdHandler(CoreHandler):

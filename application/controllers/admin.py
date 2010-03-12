@@ -1,10 +1,9 @@
-﻿import cgi
-import os
+﻿from ..model import Bidragsyter
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
+import cgi
+import os
 
-from application.model import Bidragsyter
-from datetime import datetime
 
 class BidragsytereVisningsHandler(webapp.RequestHandler):
     def get(self):
