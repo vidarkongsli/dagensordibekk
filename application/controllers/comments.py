@@ -14,11 +14,12 @@ class KommentarHjelper:
 		return { 'kommentarer':kommentarer, 'uri' : uri	 }
 		
 class VisKommentarHandler(CoreHandler):
+	# '/kommentar/(.+)'
 	def get(self, uri):
 		self.renderUsingTemplate('../../views/kommentarer.html', KommentarHjelper.hentDataForVisning(urllib.unquote(uri)))
 			
 class LeggInnKommentarHandler(CoreHandler):
-	
+	# '/kommentar/ny'
 	def post(self):
 		if Authorization.authorize(self):
 			kommentar_uri = cgi.escape(self.request.get('uri'))
