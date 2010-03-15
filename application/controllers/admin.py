@@ -26,7 +26,7 @@ class BidragsyterSvartelisteHandler(CoreHandler):
         
 class MapBidragsyterHandler(CoreHandler):
     def get(self):
-        ord = Ord.all().filter('bidragsyter = ', None).fetch(50)
+        ord = Ord.all().filter('bidragsyter = ', None).fetch(900)
         navn = set(map(lambda n : n.bidragsyter_navn, ord))
         self.renderUsingTemplate('../../views/admin_user_mapping.html', { 'navn' : navn, 'bidragsytere' : Bidragsyter.all().fetch(100) })
 
@@ -38,7 +38,7 @@ class MapBidragsyterHandler(CoreHandler):
             bidragsyter = Bidragsyter.all().filter('__key__ =', db.Key(konto)).get()
             if bidragsyter != None:
                 logging.info('bidragsyter funnet')
-                ord = Ord().all().filter('bidragsyter = ', None).fetch(500)
+                ord = Ord().all().filter('bidragsyter = ', None).fetch(900)
                 logging.info(len(ord))
                 for o in ord:
                     if o.bidragsyter_navn == navn:
