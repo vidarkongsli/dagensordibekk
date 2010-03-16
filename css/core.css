@@ -142,9 +142,6 @@ label.error { display: inline; color: #f00; }
 #skjema input[type='submit'] { display:block; }
 #skjema input[type='text'] { margin-right: 10px }
 
-/* Bidragsyter */
-ul li span#google { color: #c5c5c5; }
-
 /* Flexbox */
 /* Input textbox - do not specify a width here, it will be overwritten */
 .ffb-input {
@@ -239,3 +236,5 @@ ul li span#google { color: #c5c5c5; }
 	float:left;
 	width:232px;
 }
+
+.editable, .editable-select { background-color:#F5F5F5 }

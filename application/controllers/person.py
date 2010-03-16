@@ -16,7 +16,9 @@ class BidragsyterHandler(CoreHandler):
             bidragsyter = Bidragsyter.all().filter('__key__ =', db.Key(key)).get()
         if bidragsyter == None:
             self.error(404)
-        self.renderUsingTemplate('../../views/bidragsyter.html', { 'bidragsyter': bidragsyter, 'edit' : (user == bidragsyter.googleKonto)})
+        else:
+            view = '../../views/bidragsyter_redigerbar.html' if user == bidragsyter.googleKonto else '../../views/bidragsyter.html'
+            self.renderUsingTemplate(view, { 'bidragsyter' : bidragsyter })
 
     def post(self, key):
         if Authorization.authorize(self):

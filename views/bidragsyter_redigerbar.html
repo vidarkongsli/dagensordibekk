@@ -1,0 +1,38 @@
+{% load i18n %}
+{% extends "_master.html" %}
+{% block overskrift %}{% endblock %}
+{% block hode %}<script type="text/javascript" src="/js/jquery.jeditable.mini.js"></script>{% endblock %}
+{% block innhold %}
+<div class="boks">
+	<img src="{{ bidragsyter.gravatarUrl }}" />
+	<h2 class="editable" id="nickname">{{ bidragsyter.visningsnavn }}</h2>
+	<ul>
+		<li><strong>Google-konto:</strong> <span id="google">{{ bidragsyter.googleKonto }}</span></li>
+		<li><strong>Twitter-brukernavn:</strong> <span id='twitter' class="editable">{{ bidragsyter.twitter|default:"[legg inn]" }}</span></li>
+		<li><strong>Bekk-epost:</strong> <span id='bekk' class="editable">{{ bidragsyter.bekkAdresse|default:"[legg inn]" }}</span></li>
+		<li><strong>Motta Dagens Ord på Bekk-epost:</strong> <span id='bekk-mailliste' class="editable-select">{{ bidragsyter.paaBekkMailliste|yesno:"Ja,Nei" }}</span></li>
+		<li><strong>Motta Dagens Ord på Gmail-adresse:</strong> <span id='google-mailliste' class="editable-select">{{ bidragsyter.paaGoogleMailliste|yesno:"Ja,Nei" }}</span></li>
+	</ul>
+	<p>(Klikk på teksten for å redigere.)</p>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.editable').editable('{% url BidragsyterHandler %}', { 
+         cancel    : 'Avbryt',
+         submit    : 'Lagre',
+         indicator : 'Lagrer...',
+         tooltip   : 'Klikk for å endre...',
+		 style     : 'display : inline'
+     });
+	$('.editable-select').editable('{% url BidragsyterHandler %}', { 
+         cancel    : 'Avbryt',
+         submit    : 'Lagre',
+         indicator : 'Lagrer...',
+         tooltip   : 'Klikk for å endre...',
+		 style     : 'display : inline',
+		 data      : { '1' : 'Ja', '0' : 'Nei', 'selected' : '0' },
+		 type      : 'select'
+     });
+});
+</script>
+{% endblock %}
