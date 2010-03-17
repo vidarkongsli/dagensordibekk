@@ -8,7 +8,7 @@
 	<h2>{{ ord.navn }}</h2>
 	<p>foreslått av 
 		{% if ord.bidragsyter %}
-			<a href="{% url BidragsyterHandler o.bidragsyter.key %}">{{ ord.bidragsyter.visningsnavn }}</a>
+			<a href="{% url BidragsyterHandler ord.bidragsyter.key %}">{{ ord.bidragsyter.visningsnavn }}</a>
 		{% else %}
 			{{ ord.bnavn }}
 		{% endif %}
