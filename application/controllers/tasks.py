@@ -29,5 +29,7 @@ class TwitterUpdateTaskHandler(CoreHandler):
         
         if message_key == 1:
             Twitter().send_liker_update(ord, bidragsyter)
+        elif message_key == 2:
+            Twitter().send_kommentar_update(ord, bidragsyter)
         else:
             logging.warning('Ukjent message_key: %i' % message_key)

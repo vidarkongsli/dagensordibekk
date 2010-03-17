@@ -2,6 +2,7 @@
 from application.authorization import Authorization
 from application.model import Kommentar, Bidragsyter
 from google.appengine.api import users
+from google.appengine.api.labs import taskqueue
 import cgi
 import urllib
 
@@ -24,4 +25,5 @@ class LeggInnKommentarHandler(CoreHandler):
             kommentar_innhold = cgi.escape(self.request.get('kommentar'))
             bidrager = Bidragsyter.hent(users.get_current_user())
             Kommentar(innhold=kommentar_innhold, bidragsyter=bidrager, uri=kommentar_uri).put()
+            taskqueue.add(url='/task/twitter', params={ 'message_key' : 2, 'uri' : kommentar_uri, 'bidragsyter' : bidrager.key() })
             self.renderUsingTemplate('../../views/kommentarer.html', KommentarHjelper.hentDataForVisning(kommentar_uri))

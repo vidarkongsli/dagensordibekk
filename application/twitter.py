@@ -26,6 +26,10 @@ class Twitter(object):
         status = (u'Ordet %s (%s ) behager %s' % (ord.navn, self.shortened_url_to_dagens_ord(ord), self.bidragsyter_twitter_navn(bidragsyter))).encode('utf-8')
         self.update(status)
     
+    def send_kommentar_update(self, ord, bidragsyter):
+        status = (u'Ordet %s (%s ) kommentert av %s' % (ord.navn, self.shortened_url_to_dagens_ord(ord), self.bidragsyter_twitter_navn(bidragsyter))).encode('utf-8')
+        self.update(status)
+        
     def update(self, status):
         if len(status) > 140:
             status = status[:137] + '...'
