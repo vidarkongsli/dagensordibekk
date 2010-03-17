@@ -5,6 +5,7 @@ from google.appengine.api import users
 from google.appengine.ext.webapp.util import login_required
 import cgi
 import urllib
+from google.appengine.api.labs import taskqueue
 
 class LikerHandler(CoreHandler):
     def post(self):
@@ -15,6 +16,7 @@ class LikerHandler(CoreHandler):
                 self.renderAsJson({ 'errorCode' : 1})
             else:            
                 Liker(bidragsyter=bidrager, uri=liker_uri).put()
+                taskqueue.add(url='/task/twitter', params={ 'message_key' : 1, 'uri' : liker_uri, 'bidragsyter' : bidrager.key() })
                 self.renderAsJson({ 'errorCode': 0, 'numberOfLikes' : Liker.antall_liker(liker_uri), 'likerDuOrdet' : True })
 
     @login_required

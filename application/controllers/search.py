@@ -17,3 +17,8 @@ class SokHandler(CoreHandler):
             self.renderAsJson({ "results" : filteredResult })
         else:
             self.renderUsingTemplate('../../views/sokeresultater.html', { 'ord' : result, 'sokeord' : s })
+            
+    def __init__(self):
+        '''
+        Constructor
+        '''
