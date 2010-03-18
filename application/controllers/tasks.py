@@ -28,8 +28,10 @@ class TwitterUpdateTaskHandler(CoreHandler):
         bidragsyter = Bidragsyter.get(db.Key(bidragsyter_key))
         
         if message_key == 1:
+            logging.info('Oppdaterer liker paa twitter')
             Twitter().send_liker_update(ord, bidragsyter)
         elif message_key == 2:
+            logging.info('Oppdaterer kommentar paa twitter')
             Twitter().send_kommentar_update(ord, bidragsyter)
         else:
             logging.warning('Ukjent message_key: %i' % message_key)
