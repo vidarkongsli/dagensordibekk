@@ -5,7 +5,7 @@
 			<p>{{ kommentar.kommentartidspunkt|date }}</p>
 		</div>
 		<p class="comment-data">
-			{{ kommentar.innhold }}
+			{{ kommentar.innhold|urlize }}
 		</p>
 	</li>
 {% endfor %}
