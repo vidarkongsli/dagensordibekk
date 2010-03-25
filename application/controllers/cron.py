@@ -2,9 +2,9 @@
 from ..model import Ord, Bidragsyter
 from ..twitter import Twitter
 from datetime import datetime
-from google.appengine.api import mail
 from google.appengine.ext import webapp
 import logging
+from google.appengine.api.labs.taskqueue import Task, Queue
 
 class ValgHandler(webapp.RequestHandler):
     def get(self):
@@ -86,5 +86,9 @@ Ordet er fremmet av: %s
 Nye ord fremmes her: %s
 Denne tjenesten leveres av Dagens Ord-Komiteen. (c) 2003-2010
 """ % (dagensOrd.navn, dagensOrd.beskrivelse, dagensOrd.bnavn(), "http://dagensordibekk.appspot.com/ord/nytt")
-            mail.send_mail("Dagens Ord <vidar.kongsli@gmail.com>", to, subject, body)
-            self.response.out.write('Mail sendt')
+            
+            queue = Queue('mail-queue')
+            for recipient in to:
+                queue.add(Task(url='/task/mail', params= { 'to' : recipient, 'subject' : subject, 'body' : body }))
+            
+            self.response.out.write('Mail queued')

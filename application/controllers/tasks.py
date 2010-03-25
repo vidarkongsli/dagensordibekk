@@ -8,6 +8,7 @@ from ..model import Bidragsyter, Ord
 from ..twitter import Twitter
 from google.appengine.ext import db
 import logging
+from google.appengine.api import mail
 
 class TwitterUpdateTaskHandler(CoreHandler):
     '''
@@ -35,3 +36,13 @@ class TwitterUpdateTaskHandler(CoreHandler):
             Twitter().send_kommentar_update(ord, bidragsyter)
         else:
             logging.warning('Ukjent message_key: %i' % message_key)
+
+
+class MailSender(CoreHandler):
+    
+    def post(self):
+        to = self.request.get('to')
+        subject = self.request.get('subject')
+        body = self.request.get('body')
+        logging.info("Sending '%s' to %s" % (subject, to))
+        mail.send_mail("Dagens Ord <vidar.kongsli@gmail.com>", to, subject, body)

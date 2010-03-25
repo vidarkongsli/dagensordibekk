@@ -8,7 +8,7 @@ from application.controllers.word import NyttOrdHandler, ForslagHandler, TilGodk
 from application.controllers.feed import FeedHandler
 from application.controllers.person import BidragsyterHandler
 from application.controllers.search import SokHandler
-from application.controllers.tasks import TwitterUpdateTaskHandler
+from application.controllers.tasks import TwitterUpdateTaskHandler, MailSender
 
 application = webapp.WSGIApplication(
                                      [('/', VisDagensOrdHandler),
@@ -33,6 +33,7 @@ application = webapp.WSGIApplication(
 									  ('/admin/bidragsyter/svartelist', BidragsyterSvartelisteHandler),
                                       ('/admin/bidragsyter/map', MapBidragsyterHandler),
                                       ('/task/twitter', TwitterUpdateTaskHandler),
+                                      ('/task/mail', MailSender),
 									  ('/person/(.+)', BidragsyterHandler)],
                                      debug=True)
 	
