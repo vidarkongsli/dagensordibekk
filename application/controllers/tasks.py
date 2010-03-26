@@ -39,7 +39,6 @@ class TwitterUpdateTaskHandler(CoreHandler):
 
 
 class MailSender(CoreHandler):
-    
     def post(self):
         to = self.request.get('to')
         subject = self.request.get('subject')

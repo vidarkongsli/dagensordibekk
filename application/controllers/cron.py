@@ -83,9 +83,10 @@ class MailHandler(CoreHandler):
 ---------------------------------------------------------------------
 
 Ordet er fremmet av: %s
-Nye ord fremmes her: %s
+Kommenter ordet her: http://dagensordibekk.appspot.com/ord/%s
+Nye ord fremmes her: http://dagensordibekk.appspot.com/ord/nytt
 Denne tjenesten leveres av Dagens Ord-Komiteen. (c) 2003-2010
-""" % (dagensOrd.navn, dagensOrd.beskrivelse, dagensOrd.bnavn(), "http://dagensordibekk.appspot.com/ord/nytt")
+""" % (dagensOrd.navn, dagensOrd.beskrivelse, dagensOrd.bnavn(), dagensOrd.navn)
             
             queue = Queue('mail-queue')
             for recipient in to:
