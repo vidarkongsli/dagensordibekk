@@ -42,6 +42,8 @@ class BidragsyterHandler(CoreHandler):
                     if field in ['bekk-mailliste', 'google-mailliste'] :
                         the_value = bool(int(value))
                         value = { True : 'Ja', False : 'Nei' }[the_value]
+                    if the_value == '':
+                        the_value = None
                     setattr(bidragsyter, field_to_attr[field], the_value)
                     bidragsyter.put()
                     self.response.out.write(value);
