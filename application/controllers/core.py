@@ -11,3 +11,10 @@ class CoreHandler(webapp.RequestHandler):
     def renderAsJson(self, values):
         self.response.headers["Content-Type"] = 'application/json'
         self.response.out.write(simplejson.dumps(values))
+        
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            webapp.RequestHandler.handle_exception(self, exception, debug_mode)
+        else:
+            self.error(500)
+            self.renderUsingTemplate('../../views/error.html', {})

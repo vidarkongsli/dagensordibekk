@@ -35,7 +35,7 @@ application = webapp.WSGIApplication(
                                       ('/task/twitter', TwitterUpdateTaskHandler),
                                       ('/task/mail', MailSender),
 									  ('/person/(.+)', BidragsyterHandler)],
-                                     debug=True)
+                                     debug=False)
 	
 def main():
 	run_wsgi_app(application)
