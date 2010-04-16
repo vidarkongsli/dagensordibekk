@@ -13,12 +13,15 @@ class BidragsyterHandler(CoreHandler):
         if key == 'meg':
             bidragsyter = Bidragsyter.all().filter('googleKonto = ', user).get()
         else:
-            bidragsyter = Bidragsyter.all().filter('__key__ =', db.Key(key)).get()
-        if bidragsyter == None:
-            self.error(404)
-        else:
-            view = '../../views/bidragsyter_redigerbar.html' if user == bidragsyter.googleKonto else '../../views/bidragsyter.html'
-            self.renderUsingTemplate(view, { 'bidragsyter' : bidragsyter })
+            try:
+                bidragsyter = Bidragsyter.all().filter('__key__ =', db.Key(key)).get()
+                if bidragsyter == None:
+                    self.not_found()
+                else:
+                    view = '../../views/bidragsyter_redigerbar.html' if user == bidragsyter.googleKonto else '../../views/bidragsyter.html'
+                    self.renderUsingTemplate(view, { 'bidragsyter' : bidragsyter })
+            except:
+                self.not_found()
 
     def post(self, key):
         if Authorization.authorize(self):

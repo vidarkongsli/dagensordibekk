@@ -8,6 +8,7 @@ from application.controllers.word import NyttOrdHandler, ForslagHandler, TilGodk
 from application.controllers.feed import FeedHandler
 from application.controllers.person import BidragsyterHandler
 from application.controllers.search import SokHandler
+from application.controllers.notfound import NotFoundHandler
 from application.controllers.tasks import TwitterUpdateTaskHandler, MailSender
 
 application = webapp.WSGIApplication(
@@ -34,7 +35,8 @@ application = webapp.WSGIApplication(
                                       ('/admin/bidragsyter/map', MapBidragsyterHandler),
                                       ('/task/twitter', TwitterUpdateTaskHandler),
                                       ('/task/mail', MailSender),
-									  ('/person/(.+)', BidragsyterHandler)],
+									  ('/person/(.+)', BidragsyterHandler),
+                                      ('/.*', NotFoundHandler)],
                                      debug=False)
 	
 def main():

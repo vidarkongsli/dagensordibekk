@@ -18,3 +18,7 @@ class CoreHandler(webapp.RequestHandler):
         else:
             self.error(500)
             self.renderUsingTemplate('../../views/error.html', {})
+            
+    def not_found(self):
+        self.error(404)
+        self.renderUsingTemplate('../../views/ikkje_funne.html', {})

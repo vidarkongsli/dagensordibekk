@@ -106,6 +106,6 @@ class OrdHandler(CoreHandler):
             logging.info("Was asked for word " + ordStreng)
             ord = Ord.all().filter("navn =", ordStreng.decode("utf-8")).get()
             if ord == None:
-                self.error(404)
+                self.not_found()
             else:
                 self.renderUsingTemplate('../../views/dagens_ord.html', { 'ord':ord })
