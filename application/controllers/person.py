@@ -12,6 +12,8 @@ class BidragsyterHandler(CoreHandler):
         user = users.get_current_user()
         if key == 'meg':
             bidragsyter = Bidragsyter.all().filter('googleKonto = ', user).get()
+            view = '../../views/bidragsyter_redigerbar.html'
+            self.renderUsingTemplate(view, { 'bidragsyter' : bidragsyter })
         else:
             try:
                 bidragsyter = Bidragsyter.all().filter('__key__ =', db.Key(key)).get()
