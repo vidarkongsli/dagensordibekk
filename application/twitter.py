@@ -7,6 +7,7 @@ from google.appengine.api import urlfetch
 import urllib
 from .model import Konto
 import logging
+import oauth
 
 class Twitter(object):
     '''
@@ -14,9 +15,22 @@ class Twitter(object):
     '''
 
     def __init__(self):
-        '''
-        Constructor
-        '''
+        self.consumer_key = "uJDoRvGZMCd9SjEDGoomtA"
+        self.consumer_secret = "okYariZZL0JbNr7vzXgOI8RaXSSFulACneXxTbJzR0"
+        self.callback_url = "http://dagensordibekk.appspot.com/twittercallback"
+		
+    def lag_twitter_autentiserings_url(self):
+        return oauth.TwitterClient(self.consumer_key, self.consumer_secret, self.callback_url).get_authorization_url()
+
+    def lagre_auth_data(self, request, bidrager):
+        client = oauth.TwitterClient(self.consumer_key, self.consumer_secret, self.callback_url)
+        auth_token = request.get("oauth_token")
+        auth_verifier = request.get("oauth_verifier")
+        user_info = client.get_user_info(auth_token, auth_verifier=auth_verifier)
+        bidrager.twitter_token = user_info.token
+        bidrager.twitter_token_secret = user_info.secret
+        bidrager.put()
+        logging.info(user_info)
 
     def send_dagens_ord_update(self, dagensOrd):
         status = (u"%s (%s ): %s" % ( dagensOrd.navn, self.shortened_url_to_dagens_ord(dagensOrd), dagensOrd.beskrivelse )).encode('utf-8')

@@ -13,6 +13,11 @@ class Bidragsyter(db.Model):
     bekkAdresse = db.EmailProperty()
     paaBekkMailliste = db.BooleanProperty(default=False)
     paaGoogleMailliste = db.BooleanProperty(default=False)
+    twitter_token = db.StringProperty()
+    twitter_token_secret = db.StringProperty()
+    
+    def har_twitter_godkjenning(self):
+        return self.twitter_token != None
     
     def visningsnavn(self):
         if self.navn == None or self.navn == "":
@@ -28,15 +33,15 @@ class Bidragsyter(db.Model):
             bidragsyter = Bidragsyter(navn=user.nickname(), googleKonto=user)
             bidragsyter.put()
         return bidragsyter
-
+    
     def gravatarUrl(self):
         return self.gravatarUrlWithSize(80)
-        
+    
     def gravatarUrlWithSize(self, size):
         gravatar_url = "http://www.gravatar.com/avatar.php?"
         gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(self.googleKonto.email().lower()).hexdigest(), 'size': size })
         return gravatar_url
-        
+
 class Ord(db.Model):
     navn = db.StringProperty()
     beskrivelse = db.TextProperty()
@@ -76,15 +81,15 @@ class Liker(db.Model):
     bidragsyter = db.ReferenceProperty(Bidragsyter)
     tidspunkt = db.DateTimeProperty(auto_now_add=True)
     uri = db.StringProperty()
-
+    
     @staticmethod
     def antall_liker(uri):
         return Liker.all().filter('uri = ', uri).count()
-        
+    
     @staticmethod
     def fra_person(uri, bidragsyter):
         return Liker.all().filter('uri =', uri).filter('bidragsyter =', bidragsyter).get()
-    
+
 class Konto(db.Model):
     navn = db.StringProperty()
     brukernavn = db.StringProperty()
@@ -95,7 +100,7 @@ class Konto(db.Model):
         if Konto.all().get() == None:
             Konto(navn='dummy', brukernavn='dummy', passord = 'dummy').put()
         return Konto.all().filter('navn = ', navn).get()
-        
+    
     def as_basic_auth_header(self):
         base64string = base64.encodestring('%s:%s' % (self.brukernavn, self.passord))[:-1]
         return "Basic %s" % base64string

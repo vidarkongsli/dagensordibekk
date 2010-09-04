@@ -5,6 +5,7 @@ from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required
 import cgi
+import logging
 
 class BidragsyterHandler(CoreHandler):
     @login_required
@@ -12,8 +13,9 @@ class BidragsyterHandler(CoreHandler):
         user = users.get_current_user()
         if key == 'meg':
             bidragsyter = Bidragsyter.all().filter('googleKonto = ', user).get()
+            logging.info('Har twitter: %s' % bidragsyter.har_twitter_godkjenning())
             view = '../../views/bidragsyter_redigerbar.html'
-            self.renderUsingTemplate(view, { 'bidragsyter' : bidragsyter })
+            self.renderUsingTemplate(view, { 'bidragsyter' : bidragsyter, 'har_twitter_integrasjon' : bidragsyter.har_twitter_godkjenning() })
         else:
             try:
                 bidragsyter = Bidragsyter.all().filter('__key__ =', db.Key(key)).get()
@@ -21,7 +23,7 @@ class BidragsyterHandler(CoreHandler):
                     self.not_found()
                 else:
                     view = '../../views/bidragsyter_redigerbar.html' if user == bidragsyter.googleKonto else '../../views/bidragsyter.html'
-                    self.renderUsingTemplate(view, { 'bidragsyter' : bidragsyter })
+                    self.renderUsingTemplate(view, { 'bidragsyter' : bidragsyter, 'har_twitter_integrasjon' : bidragsyter.har_twitter_godkjenning() })
             except:
                 self.not_found()
 

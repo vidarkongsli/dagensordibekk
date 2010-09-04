@@ -15,6 +15,19 @@
 	</ul>
 	<p>(Klikk på teksten for å redigere.)</p>
 </div>
+<h2></h2>
+<div class="boks">
+ 	<h3>Twitter-integrasjon</h3>
+	<p>
+		{% if har_twitter_integrasjon %}
+			Din Dagens Ord-bruker er integrert med Twitter-kontoen
+		{% else %}
+			<form  method="post" action="{% url TwitterAuthenticationHandler %}">
+				<input type="submit" name="Gi Dagens Ord tilgang til Twitter-kontoen min" value="Gi Dagens Ord tilgang til Twitter-kontoen min" id="butt">
+			</form>
+		{% endif %}
+	</p>
+</div>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.editable').editable('{% url BidragsyterHandler %}', { 

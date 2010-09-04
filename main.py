@@ -10,6 +10,7 @@ from application.controllers.person import BidragsyterHandler
 from application.controllers.search import SokHandler
 from application.controllers.notfound import NotFoundHandler
 from application.controllers.tasks import TwitterUpdateTaskHandler, MailSender
+from application.controllers.twitter import TwitterAuthenticationHandler
 
 application = webapp.WSGIApplication(
                                      [('/', VisDagensOrdHandler),
@@ -36,8 +37,9 @@ application = webapp.WSGIApplication(
                                       ('/task/twitter', TwitterUpdateTaskHandler),
                                       ('/task/mail', MailSender),
 									  ('/person/(.+)', BidragsyterHandler),
+									  ('/twittercallback', TwitterAuthenticationHandler),
                                       ('/.*', NotFoundHandler)],
-                                     debug=False)
+                                     debug=True)
 	
 def main():
 	run_wsgi_app(application)
