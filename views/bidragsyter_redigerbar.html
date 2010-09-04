@@ -20,7 +20,7 @@
  	<h3>Twitter-integrasjon</h3>
 	<p>
 		{% if har_twitter_integrasjon %}
-			Din Dagens Ord-bruker er integrert med Twitter-kontoen
+			Din Dagens Ord-bruker er autorisert til å oppdatere statusen til '{{ bidragsyter.twitter_name }}' ({{ bidragsyter.twitter_username }})
 		{% else %}
 			<form  method="post" action="{% url TwitterAuthenticationHandler %}">
 				<input type="submit" name="Gi Dagens Ord tilgang til Twitter-kontoen min" value="Gi Dagens Ord tilgang til Twitter-kontoen min" id="butt">

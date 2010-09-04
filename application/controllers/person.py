@@ -1,6 +1,7 @@
 from application.authorization import Authorization
 from application.controllers.core import CoreHandler
 from application.model import Bidragsyter
+from application.model import Konto
 from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required
@@ -13,7 +14,6 @@ class BidragsyterHandler(CoreHandler):
         user = users.get_current_user()
         if key == 'meg':
             bidragsyter = Bidragsyter.all().filter('googleKonto = ', user).get()
-            logging.info('Har twitter: %s' % bidragsyter.har_twitter_godkjenning())
             view = '../../views/bidragsyter_redigerbar.html'
             self.renderUsingTemplate(view, { 'bidragsyter' : bidragsyter, 'har_twitter_integrasjon' : bidragsyter.har_twitter_godkjenning() })
         else:

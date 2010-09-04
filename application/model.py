@@ -15,6 +15,8 @@ class Bidragsyter(db.Model):
     paaGoogleMailliste = db.BooleanProperty(default=False)
     twitter_token = db.StringProperty()
     twitter_token_secret = db.StringProperty()
+    twitter_username = db.StringProperty()
+    twitter_name = db.StringProperty()
     
     def har_twitter_godkjenning(self):
         return self.twitter_token != None
@@ -94,6 +96,8 @@ class Konto(db.Model):
     navn = db.StringProperty()
     brukernavn = db.StringProperty()
     passord = db.StringProperty()
+    oauth_token = db.StringProperty()
+    oauth_secret = db.StringProperty()
     
     @staticmethod
     def get(navn):

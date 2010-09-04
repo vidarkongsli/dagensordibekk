@@ -10,9 +10,6 @@ import logging
 import oauth
 
 class Twitter(object):
-    '''
-    classdocs
-    '''
 
     def __init__(self):
         self.consumer_key = "uJDoRvGZMCd9SjEDGoomtA"
@@ -27,10 +24,11 @@ class Twitter(object):
         auth_token = request.get("oauth_token")
         auth_verifier = request.get("oauth_verifier")
         user_info = client.get_user_info(auth_token, auth_verifier=auth_verifier)
-        bidrager.twitter_token = user_info.token
-        bidrager.twitter_token_secret = user_info.secret
+        bidrager.twitter_token = user_info['token']
+        bidrager.twitter_token_secret = user_info['secret']
+        bidrager.twitter_username = user_info['username']
+        bidrager.twitter_name = user_info['name']
         bidrager.put()
-        logging.info(user_info)
 
     def send_dagens_ord_update(self, dagensOrd):
         status = (u"%s (%s ): %s" % ( dagensOrd.navn, self.shortened_url_to_dagens_ord(dagensOrd), dagensOrd.beskrivelse )).encode('utf-8')
@@ -47,8 +45,21 @@ class Twitter(object):
     def update(self, status):
         if len(status) > 140:
             status = status[:137] + '...'
-        api_url = "http://twitter.com/statuses/update.json?status=%s" % urllib.quote(status)
-        result = urlfetch.fetch(url=api_url, payload={}, method=urlfetch.POST, headers = { 'Authorization' : Konto.get('twitter').as_basic_auth_header() })
+        
+        twitter_konto = Konto.get('twitter')
+        client = oauth.TwitterClient(self.consumer_key, self.consumer_secret, self.callback_url)
+
+        additional_params = {
+            'status' : status
+        }
+        
+        result = client.make_request(
+             "http://twitter.com/statuses/update.json",
+              token=twitter_konto.oauth_token,
+              secret=twitter_konto.oauth_secret,
+              additional_params=additional_params,
+              method=urlfetch.POST)
+
         if result.status_code == 200:
             logging.info("Successfully updated twitter status")
             logging.info(result.content)

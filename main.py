@@ -39,7 +39,7 @@ application = webapp.WSGIApplication(
 									  ('/person/(.+)', BidragsyterHandler),
 									  ('/twittercallback', TwitterAuthenticationHandler),
                                       ('/.*', NotFoundHandler)],
-                                     debug=True)
+                                     debug=False)
 	
 def main():
 	run_wsgi_app(application)
