@@ -102,7 +102,7 @@ class Konto(db.Model):
     @staticmethod
     def get(navn):
         if Konto.all().get() == None:
-            Konto(navn='dummy', brukernavn='dummy', passord = 'dummy').put()
+            Konto(navn='dummy', brukernavn='dummy', passord = '', oauth_token = '', oauth_secret = '').put()
         return Konto.all().filter('navn = ', navn).get()
     
     def as_basic_auth_header(self):
