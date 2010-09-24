@@ -46,7 +46,7 @@ class TilGodkjenningHandler(CoreHandler):
                 'navn' : ord.navn,
                 'id' : ord.key().id(),
                 'beskrivelse' : ord.beskrivelse,
-                'for' : len(ord.stemmerFor),
+                'yea' : len(ord.stemmerFor),
                 'mot' : len(ord.stemmerMot),
                 'bidrager' : {
                     'navn' : ord.bidragsyter.visningsnavn() if ord.bidragsyter else ord.bnavn(),

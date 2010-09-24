@@ -14,7 +14,7 @@ function fetch(offset) {
 					"<a name='a-" + o.id +"'>" +
 						"<h3>" + o.navn +
 							"<span class='stemmer'>" +
-								"(<span class='stemmefor'>" + o.for + "</span>" +
+								"(<span class='stemmefor'>" + o.yea + "</span>" +
 								"/" +
 								"<span class='stemmemot'>" + o.mot + "</span>)" +
 							"</span>" +
@@ -39,9 +39,7 @@ function fetch(offset) {
 			$('#ord-' + o.id).voteOn({ 'urlPost':'{% url StemmeHandler %}'})
 		});
 		if (data.ord.length == 20) {
-			$('#ordliste').append(
-				"<li class='boks' id='hentneste'><p>Hent flere ord</p></li>"
-			);
+			$('#ordliste').append("<li class='boks' id='hentneste'><p>Hent flere ord</p></li>");
 			$('#hentneste').click(function() { fetch(data.offset); });
 		}
 	});
