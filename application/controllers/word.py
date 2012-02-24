@@ -98,6 +98,7 @@ class VisDagensOrdHandler(CoreHandler):
         self.renderUsingTemplate('../../views/dagens_ord.html', { 'ord':dagensOrd })
         
 class OrdHandler(CoreHandler):
+    @login_required
     def get(self, ordForesporsel):
         if ordForesporsel == "":
             self.redirect("/")
