@@ -1,0 +1,27 @@
+<li class='boks' id='ord-{{id}}'>
+	<a name='a-{{id}}'>
+		<h3> {{navn}}
+			<span class='stemmer'>(<span class='stemmefor'>{{yea}}</span> / <span class='stemmemot'>{{mot}}</span>)</span>
+		</h3
+	</a>
+	<p>
+		Foreslått av
+		{{#if bidrager.id}}
+			<a href='/person/{{bidrager.id}}'>
+		{{/if}}
+		{{bidrager.navn}}
+		{{#if bidrager.id}}</a>{{/if}}
+	</p>
+	<blockquote>{{beskrivelse}}</blockquote>
+	<div class='errormessage'></div>
+	<div class='message'></div>
+	<div class='stemming'>
+		{{#if stemmer}}
+			Du har allerede stemt {{#if stemtFor}} for {{else}} mot {{/if}} dette ordet.
+		{{else}}
+			<a href='#' title='Stem for!' class='stemmefor'>Ja</a>
+			<a href='#' title='Stem mot!' class='stemmemot'>Nei</a>
+		{{/if}}
+	</div>
+	<div style='clear:both' />
+</li>
