@@ -7,6 +7,10 @@ handlers:
 - url: /(.*\.txt)
   static_files: static/\1
   upload: static/(.*\.txt)
+
+- url: /(.*\.handlebars)
+  static_files: static/\1
+  upload: static/(.*\.handlebars)
   
 - url: /css
   static_dir: css

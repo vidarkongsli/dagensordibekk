@@ -42,18 +42,31 @@ class TilGodkjenningHandler(CoreHandler):
         if 'application/json' in self.request.headers['Accept']:
             off = int(self.request.get('offset'))
             alle_ord = Ord.all().filter("arbeidsflytstilstand =", 0).order('forslagstidspunkt').fetch(20, offset=off)
+            logging.info("skal rendre")
             self.renderAsJson({ 'offset': len(alle_ord) + off, 'ord': map(lambda ord: {
                 'navn' : ord.navn,
                 'id' : ord.key().id(),
                 'beskrivelse' : ord.beskrivelse,
                 'yea' : len(ord.stemmerFor),
                 'mot' : len(ord.stemmerMot),
+                'stemme' : TilGodkjenningHandler.__har_stemt_paa(ord),
                 'bidrager' : {
                     'navn' : ord.bidragsyter.visningsnavn() if ord.bidragsyter else ord.bnavn(),
                     'id' : str(ord.bidragsyter.key()) if ord.bidragsyter else None}}, alle_ord) })
         else:
             self.renderUsingTemplate('../../views/paavalg.html', { })
-            
+
+    @staticmethod
+    def __har_stemt_paa(ord):
+        logging.info("_har_stempt_paa")
+        bidragsyterId = Bidragsyter.hent(users.get_current_user()).key().id()
+        if bidragsyterId in ord.stemmerFor:
+            return 'Yea'
+        elif bidragsyterId in ord.stemmerMot:
+            return 'Nay'
+        else:
+            return ''
+
 class NesteDagensOrdHandler(CoreHandler):
     @login_required
     def get(self):
