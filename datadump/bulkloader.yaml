@@ -1,0 +1,253 @@
+python_preamble:
+- import: base64
+- import: re
+- import: google.appengine.ext.bulkload.transform
+- import: google.appengine.ext.bulkload.bulkloader_wizard
+- import: google.appengine.ext.db
+- import: google.appengine.api.datastore
+- import: google.appengine.api.users
+- import: transformers
+
+transformers:
+
+- kind: AuthToken
+  connector: csv
+  connector_options:
+  property_map:
+    - property: __key__
+      external_name: key
+      export_transform: transform.key_id_or_name_as_string
+
+    - property: created
+      external_name: created
+      # Type: Date/Time Stats: 15 properties of this type in this kind.
+      import_transform: transform.import_date_time('%Y-%m-%dT%H:%M:%S')
+      export_transform: transform.export_date_time('%Y-%m-%dT%H:%M:%S')
+
+    - property: secret
+      external_name: secret
+      # Type: String Stats: 15 properties of this type in this kind.
+
+    - property: service
+      external_name: service
+      # Type: String Stats: 15 properties of this type in this kind.
+
+    - property: token
+      external_name: token
+      # Type: String Stats: 15 properties of this type in this kind.
+
+
+- kind: Bidragsyter
+  connector: csv
+  connector_options:
+  property_map:
+    - property: __key__
+      external_name: key
+      export_transform: transform.key_id_or_name_as_string
+
+    - property: bekkAdresse
+      external_name: bekkAdresse
+      # Type: Email Stats: 23 properties of this type in this kind.
+      import_transform: db.Email
+
+    - property: googleKonto
+      external_name: googleKonto
+      # Type: User Stats: 112 properties of this type in this kind.
+      import_transform: transform.none_if_empty(users.User)  # Assumes email address
+
+    - property: navn
+      external_name: navn
+      # Type: String Stats: 112 properties of this type in this kind.
+
+    - property: paaBekkMailliste
+      external_name: paaBekkMailliste
+      # Type: Boolean Stats: 112 properties of this type in this kind.
+      import_transform: transform.regexp_bool('true', re.IGNORECASE)
+
+    - property: paaGoogleMailliste
+      external_name: paaGoogleMailliste
+      # Type: Boolean Stats: 112 properties of this type in this kind.
+      import_transform: transform.regexp_bool('true', re.IGNORECASE)
+
+    - property: svartelistet
+      external_name: svartelistet
+      # Type: Boolean Stats: 112 properties of this type in this kind.
+      import_transform: transform.regexp_bool('true', re.IGNORECASE)
+
+    - property: twitter
+      external_name: twitter
+      # Type: String Stats: 112 properties of this type in this kind.
+
+    - property: twitter_name
+      external_name: twitter_name
+      # Type: String Stats: 3 properties of this type in this kind.
+
+    - property: twitter_token
+      external_name: twitter_token
+      # Type: String Stats: 3 properties of this type in this kind.
+
+    - property: twitter_token_secret
+      external_name: twitter_token_secret
+      # Type: String Stats: 3 properties of this type in this kind.
+
+    - property: twitter_username
+      external_name: twitter_username
+      # Type: String Stats: 3 properties of this type in this kind.
+
+
+- kind: Kommentar
+  connector: csv
+  connector_options:
+  property_map:
+    - property: __key__
+      external_name: key
+      export_transform: transform.key_id_or_name_as_string
+
+    - property: bidragsyter
+      external_name: bidragsyter
+      # Type: Key Stats: 20 properties of this type in this kind.
+      import_transform: transform.create_foreign_key('Bidragsyter')
+      export_transform: transform.key_id_or_name_as_string
+
+    - property: innhold
+      external_name: innhold
+      # Type: String Stats: 20 properties of this type in this kind.
+
+    - property: kommentartidspunkt
+      external_name: kommentartidspunkt
+      # Type: Date/Time Stats: 20 properties of this type in this kind.
+      import_transform: transform.import_date_time('%Y-%m-%dT%H:%M:%S')
+      export_transform: transform.export_date_time('%Y-%m-%dT%H:%M:%S')
+
+    - property: uri
+      external_name: uri
+      # Type: String Stats: 20 properties of this type in this kind.
+
+
+- kind: Konto
+  connector: csv
+  connector_options:
+  property_map:
+    - property: __key__
+      external_name: key
+      export_transform: transform.key_id_or_name_as_string
+
+    - property: brukernavn
+      external_name: brukernavn
+      # Type: String Stats: 3 properties of this type in this kind.
+
+    - property: navn
+      external_name: navn
+      # Type: String Stats: 3 properties of this type in this kind.
+
+    - property: oauth_secret
+      external_name: oauth_secret
+      # Type: String Stats: 3 properties of this type in this kind.
+
+    - property: oauth_token
+      external_name: oauth_token
+      # Type: String Stats: 3 properties of this type in this kind.
+
+    - property: passord
+      external_name: passord
+      # Type: String Stats: 2 properties of this type in this kind.
+
+
+- kind: Liker
+  connector: csv
+  connector_options:
+  property_map:
+    - property: __key__
+      external_name: key
+      export_transform: transform.key_id_or_name_as_string
+
+    - property: bidragsyter
+      external_name: bidragsyter
+      # Type: Key Stats: 29 properties of this type in this kind.
+      import_transform: transform.create_foreign_key('Bidragsyter')
+      export_transform: transform.key_id_or_name_as_string
+
+    - property: tidspunkt
+      external_name: tidspunkt
+      # Type: Date/Time Stats: 29 properties of this type in this kind.
+      import_transform: transform.import_date_time('%Y-%m-%dT%H:%M:%S')
+      export_transform: transform.export_date_time('%Y-%m-%dT%H:%M:%S')
+
+    - property: uri
+      external_name: uri
+      # Type: String Stats: 29 properties of this type in this kind.
+
+
+- kind: Ord
+  connector: csv
+  connector_options:
+  property_map:
+    - property: __key__
+      external_name: key
+      export_transform: transform.key_id_or_name_as_string
+
+    - property: arbeidsflytstilstand
+      external_name: arbeidsflytstilstand
+      # Type: Integer Stats: 2675 properties of this type in this kind.
+      import_transform: transform.none_if_empty(int)
+
+    - property: beskrivelse
+      external_name: beskrivelse
+      # Type: Text Stats: 2675 properties of this type in this kind.
+      import_transform: db.Text
+
+    - property: bidragsyter
+      external_name: bidragsyter
+      # Type: Key Stats: 1780 properties of this type in this kind.
+      import_transform: transform.create_foreign_key('Bidragsyter')
+      export_transform: transform.key_id_or_name_as_string
+
+    - property: bidragsyter_navn
+      external_name: bidragsyter_navn
+      # Type: Text Stats: 1043 properties of this type in this kind.
+      import_transform: db.Text
+
+#    - property: dagensOrdDatoer
+#      external_name: dagensOrdDatoer
+      # Type: Date/Time Stats: 2880 properties of this type in this kind.
+#      import_transform: transform.import_date_time('%Y-%m-%dT%H:%M:%S')
+      #export_transform: transform.export_date_time('%Y-%m-%dT%H:%M:%S')
+#      export_transform: "lambda value : ','.join(map(lambda dt: dt.strftime('%Y-%m-%dT%H:%M:%S'), value))"
+      #export_transform: "','.join"
+
+    - property: erDagensOrd
+      external_name: erDagensOrd
+      # Type: Boolean Stats: 2675 properties of this type in this kind.
+      import_transform: transform.regexp_bool('true', re.IGNORECASE)
+
+    - property: forslagstidspunkt
+      external_name: forslagstidspunkt
+      # Type: Date/Time Stats: 2675 properties of this type in this kind.
+      import_transform: transform.import_date_time('%Y-%m-%dT%H:%M:%S')
+      export_transform: transform.export_date_time('%Y-%m-%dT%H:%M:%S')
+
+    - property: harVaertDagensOrd
+      external_name: harVaertDagensOrd
+      # Type: Boolean Stats: 2675 properties of this type in this kind.
+      import_transform: transform.regexp_bool('true', re.IGNORECASE)
+
+    - property: navn
+      external_name: navn
+      # Type: String Stats: 2675 properties of this type in this kind.
+
+    - property: sisteDagensOrdDato
+      external_name: sisteDagensOrdDato
+      # Type: Date/Time Stats: 1433 properties of this type in this kind.
+      import_transform: transform.import_date_time('%Y-%m-%dT%H:%M:%S')
+      export_transform: transform.export_date_time('%Y-%m-%dT%H:%M:%S')
+
+    - property: stemmerFor
+      external_name: stemmerFor
+      # Type: Integer Stats: 807 properties of this type in this kind.
+      import_transform: transform.none_if_empty(int)
+
+    - property: stemmerMot
+      external_name: stemmerMot
+      # Type: Integer Stats: 440 properties of this type in this kind.
+      import_transform: transform.none_if_empty(int)
+

@@ -1,6 +1,7 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from application.controllers.cron import ValgHandler, SettDagensOrdHandler, TwitterHandler, MailHandler
+from application.controllers.bye import ByeHandler
 from application.controllers.cron2 import SocialcastHandler
 from application.controllers.admin import BidragsytereVisningsHandler, BidragsyterSvartelisteHandler, MapBidragsyterHandler
 from application.controllers.comments import LeggInnKommentarHandler, VisKommentarHandler
@@ -19,6 +20,7 @@ application = webapp.WSGIApplication(
                                       ('/forslag', ForslagHandler),
 									  ('/ord/stem', StemmeHandler),
 									  ('/ord/cron/valg', ValgHandler),
+									  ('/ord/byebye', ByeHandler),
 									  ('/ord/cron/settdagensord', SettDagensOrdHandler),
 									  ('/ord/cron/twitter', TwitterHandler),
 									  ('/ord/cron/sc', SocialcastHandler),
